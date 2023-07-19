@@ -10,6 +10,6 @@ namespace DTOs
     //Todo DTO debe heredar de esta clase.
     public class BaseDTO
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }
