@@ -31,7 +31,7 @@ namespace DataAccess.DAO
 
         }
 
-        public void AddPictureParam(string paramName, byte[] paramValue)
+        public void AddFloatParam(string paramName, float paramValue)
         {
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
