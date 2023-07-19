@@ -1,0 +1,73 @@
+﻿@page
+@model WebApp.Pages.CreateUserModel
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Usuarios - Información General</title>
+    <link rel="stylesheet" type="text/css" href="CreateUserStyles.css">
+</head>
+<body>
+    <div class="timeline">
+        <div class="step active">Información General</div>
+        <div class="step">Ubicación</div>
+        <div class="step">Autenticación</div>
+    </div>
+
+    <div class="form-container">
+        <h2>Información General</h2>
+        <form method="post" action="/Ubicacion">
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required maxlength="50">
+                </div>
+                <div class="form-column">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos" required maxlength="50">
+                </div>
+                <div class="form-column">
+                    <label for="tipoIdentificacion">Tipo de Identificación:</label>
+                    <select id="tipoIdentificacion" name="tipoIdentificacion" required>
+                        <option value="nacional">Nacional</option>
+                        <option value="extranjero">Extranjero</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="numeroIdentificacion">Número de Identificación:</label>
+                    <input type="text" id="numeroIdentificacion" name="numeroIdentificacion" required maxlength="50">
+                </div>
+                <div class="form-column">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-column">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required pattern="\+\d{3}\s\d{4}-\d{4}">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="cedulaImagen">Cargar Imagen de Cédula:</label>
+                    <input type="file" id="cedulaImagen" name="cedulaImagen" accept=".jpg, .png, .pdf" required>
+                </div>
+                <div class="form-column">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-column">
+                    <label for="confirmPassword">Confirmar Contraseña:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+            </div>
+
+            <button type="submit" class="next-button">Siguiente</button>
+        </form>
+    </div>
+</body>
+</html>
