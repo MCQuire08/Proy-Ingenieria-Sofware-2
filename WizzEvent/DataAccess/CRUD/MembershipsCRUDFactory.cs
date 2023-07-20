@@ -22,15 +22,17 @@ namespace DataAccess.CRUD
 
         public override void Create(BaseDTO dto)
         {
-           var membership = (Memberships)dto;
-            var sqlOperation = _mapper.GetCreateStatement(membership);
+          
+            var sqlOperation = _mapper.GetCreateStatement(dto);
            _dao.ExecuteQueryProcedure(sqlOperation);
 
         }
 
         public override void Delete(BaseDTO dto)
         {
-            throw new NotImplementedException();
+            var sqlOperation = _mapper.GetDeleteStatement(dto);
+
+            _dao.ExecuteProcedure(sqlOperation);
         }
 
         public override T Retrieve<T>()
@@ -40,17 +42,55 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+
+            var lstMemberships = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveAllStatement();
+
+            var lstResults = _dao.ExecuteQueryProcedure(sqlOperation);
+
+            if (lstResults.Count > 0)
+            {
+                var objs = _mapper.BuildObjects(lstResults);
+                foreach (var obj in objs)
+                {
+                    lstMemberships.Add((T)Convert.ChangeType(obj, typeof(T)));
+                }
+            }
+
+            return lstMemberships;
+
         }
 
         public override T RetrieveById<T>(BaseDTO dto)
         {
-            throw new NotImplementedException();
+            var membership = (Memberships)dto;
+            var lstMemberships = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveByIDStatement(membership);
+
+            var result = _dao.ExecuteQueryProcedure(sqlOperation);
+
+            if (result.Count > 0)
+            {
+                var objs = _mapper.BuildObjects(result);
+                foreach (var obj in objs)
+                {
+                    lstMemberships.Add((T)Convert.ChangeType(obj, typeof(T)));
+                }
+
+            }
+            if (lstMemberships.Count > 0)
+            {
+                return lstMemberships[0]; // Return the first element of lstMessages
+            }
+
+            return default(T);
         }
 
         public override void Update(BaseDTO dto)
         {
-            throw new NotImplementedException();
+            var sqlOperation = _mapper.GetUpdateStatement(dto);
+
+            _dao.ExecuteProcedure(sqlOperation);
         }
     }
 }

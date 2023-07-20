@@ -10,7 +10,8 @@ namespace DTOs
     {
         public string Name { get; set; }
         public float Price { get; set; }
-        public int TicketsToSell { get; set; }
+        public int TicketsToSellMin { get; set; }
+        public int TicketsToSellMax { get; set; }
         public float Commission { get; set; } 
 
     }
