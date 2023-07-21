@@ -86,7 +86,7 @@ function AdminMembresiasCRUD() {
         var columns = [];
 
         columns[0] = { 'data': 'name' };
-        columns[1] = columns[1] = {
+        columns[1] = {
             'data': null,
             'render': function (data, type, row) {
                 return row.ticketsToSellMin + '-' + row.ticketsToSellMax;

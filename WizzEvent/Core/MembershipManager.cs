@@ -14,10 +14,8 @@ namespace Core
     {
         public void Create(Memberships membership)
         {
-
             var mm = new MembershipsCRUDFactory();
             mm.Create(membership);
-
         }
 
         public void Update(Memberships membership)
@@ -29,22 +27,18 @@ namespace Core
         {
             var mm = new MembershipsCRUDFactory();
             mm.Delete(membership);
-
         }
         public void RetrieveAll(Memberships membership) { }
         public List<Memberships> RetrieveAll()
         {
             var mm = new MembershipsCRUDFactory();
             return mm.RetrieveAll<Memberships>();
-
         }
         public Memberships RetrieveByID(Memberships membership)
         {
             var id = membership.Id;
-
             var mcrud = new MembershipsCRUDFactory();
             return mcrud.RetrieveById<Memberships>(membership);
-
         }
 
     }
