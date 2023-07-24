@@ -16,7 +16,6 @@ namespace DataAccess.CRUD
         // Definicion de los metodos del CRUD.
 
         public abstract void Create(BaseDTO dto);
-        public abstract T Retrieve<T>();
         public abstract T RetrieveById<T>(BaseDTO dto);
         public abstract List<T> RetrieveAll<T>();
         public abstract void Update(BaseDTO dto);

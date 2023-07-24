@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOs.Events
 {
-    public class Seat
+    public class Seat : BaseDTO
     {
         [Required(ErrorMessage = "Scenery is required.")]
         public int IdScenery { get; set; }

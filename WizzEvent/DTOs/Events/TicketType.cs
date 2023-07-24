@@ -14,7 +14,7 @@ namespace DTOs.Events
         [Required(ErrorMessage = "Ticket type name is required.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Price is required.")]
-        public double Price { get; set; }
+        public float Price { get; set; }
         [Required(ErrorMessage = "Amount is required.")]
         public int Amount { get; set; }
     }

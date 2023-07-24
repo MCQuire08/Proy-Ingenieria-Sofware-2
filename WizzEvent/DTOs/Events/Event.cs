@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DTOs.Events
@@ -25,13 +26,11 @@ namespace DTOs.Events
         public string Information { get; set; }
         [Required(ErrorMessage = "Payment Method is required.")]
         public string PaymentMethod { get; set; }
-        public int? FreeTickets { get; set; }
+        public int FreeTickets { get; set; }
         [Required(ErrorMessage = "OwnedBy is required.")]
         public int OwnedBy { get; set; }
         [Required(ErrorMessage = "Event state is required.")]
         public string State { get; set; }
-        [Required(ErrorMessage = "Event category is required.")]
-        public int IdCategory { get; set; }
     }
 }
 

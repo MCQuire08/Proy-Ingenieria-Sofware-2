@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOs.Events
 {
-    public class Category
+    public class Category : BaseDTO
     {
         [Required(ErrorMessage = "Category name is required.")]
         public string Name { get; set; }

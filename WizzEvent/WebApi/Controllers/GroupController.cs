@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DTOs.Events;
+using Core;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventGroupController : Controller
+    public class GroupController : Controller
     {
         [HttpPost]
         [Route("CreateGroup")]
@@ -13,6 +14,9 @@ namespace WebApi.Controllers
         {
             try
             {
+                var um = new GroupManager();
+                um.CreateGroup(group);
+
                 return Ok(group);
             }
             catch (Exception ex)
@@ -27,7 +31,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok();
+                var mm = new GroupManager();
+                var results = mm.RetrieveAllGroup();
+
+                return Ok(results);
             }
             catch (Exception ex)
             {
@@ -41,6 +48,8 @@ namespace WebApi.Controllers
         {
             try
             {
+                var um = new GroupManager();
+                um.UpdateGroup(group);
                 return Ok(group);
             }
             catch (Exception ex)
@@ -55,6 +64,8 @@ namespace WebApi.Controllers
         {
             try
             {
+                var um = new GroupManager();
+                um.DeleteGroup(group);
                 return Ok(group);
             }
             catch (Exception ex)

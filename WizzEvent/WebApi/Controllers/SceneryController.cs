@@ -1,4 +1,5 @@
-﻿using DTOs.Events;
+﻿using Core;
+using DTOs.Events;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -14,6 +15,8 @@ namespace WebApi.Controllers
         {
             try
             {
+                var um = new SceneryManager();
+                um.CreateScenery(scenery);
                 return Ok(scenery);
             }
             catch (Exception ex)
@@ -28,7 +31,25 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok();
+                var mm = new SceneryManager();
+                var results = mm.RetrieveAllSceneries();
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateScenery")]
+        public async Task<IActionResult> UpdateScenery(Scenery scenery)
+        {
+            try
+            {
+                var um = new SceneryManager();
+                um.UpdateScenery(scenery);
+                return Ok(scenery);
             }
             catch (Exception ex)
             {
@@ -42,6 +63,8 @@ namespace WebApi.Controllers
         {
             try
             {
+                var um = new SceneryManager();
+                um.DeleteScenery(scenery);
                 return Ok(scenery);
             }
             catch (Exception ex)
@@ -54,10 +77,12 @@ namespace WebApi.Controllers
         #region"Sector"
         [HttpPost]
         [Route("CreateSectorToScenery")]
-        public async Task<IActionResult> CreateSectorToScenery(int idScenery, Sector sector)
+        public async Task<IActionResult> CreateSectorToScenery(Sector sector)
         {
             try
             {
+                var um = new SceneryManager();
+                um.CreateSector(sector);
                 return Ok(sector);
             }
             catch (Exception ex)
@@ -72,7 +97,9 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok();
+                var mm = new SceneryManager();
+                var results = mm.RetrieveAllSector(idScenery);
+                return Ok(results);
             }
             catch (Exception ex)
             {
@@ -82,10 +109,12 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("DeleteSectorToScenery")]
-        public async Task<IActionResult> DeleteSectorToScenery(int idScenery, Sector sector)
+        public async Task<IActionResult> DeleteSectorToScenery(Sector sector)
         {
             try
             {
+                var um = new SceneryManager();
+                um.DeleteSector(sector);
                 return Ok(sector);
             }
             catch (Exception ex)
@@ -99,10 +128,12 @@ namespace WebApi.Controllers
         #region"Seat"
         [HttpPost]
         [Route("CreateSeatToSector")]
-        public async Task<IActionResult> CreateSeatToSector(int idScenery, int idSector, Seat seat)
+        public async Task<IActionResult> CreateSeatToSector(Seat seat)
         {
             try
             {
+                var um = new SceneryManager();
+                um.CreateSeat(seat);
                 return Ok(seat);
             }
             catch (Exception ex)
@@ -117,7 +148,9 @@ namespace WebApi.Controllers
         {
             try
             {
-                return Ok();
+                var mm = new SceneryManager();
+                var results = mm.RetrieveAllSeatsOfSector(idScenery,idSector);
+                return Ok(results);
             }
             catch (Exception ex)
             {
@@ -127,10 +160,12 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("DeleteSeatToSector")]
-        public async Task<IActionResult> DeleteSeatToSector(int idScenery, int idSector)
+        public async Task<IActionResult> DeleteSeatToSector(Seat seat)
         {
             try
             {
+                var um = new SceneryManager();
+                um.DeleteSeat(seat);
                 return Ok();
             }
             catch (Exception ex)

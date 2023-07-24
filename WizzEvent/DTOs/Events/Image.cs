@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOs.Events
 {
-    public class Image
+    public class Image:BaseDTO
     {
         [Required(ErrorMessage = "Event is required.")]
         public int IdEvent { get; set; }
