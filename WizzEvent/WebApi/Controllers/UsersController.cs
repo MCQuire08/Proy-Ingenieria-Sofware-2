@@ -90,5 +90,29 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(User user)
+        {
+            try
+            {
+                var userManager = new UserManager();
+                var existingUser = userManager.RetrieveUserByEmailAndPassword(user.Email, user.Password);
+
+                if (existingUser != null)
+                {
+                    return Ok(existingUser);
+                }
+                else
+                {
+                    return BadRequest("Usuario no encontrado. Por favor, verifique sus credenciales.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

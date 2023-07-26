@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using DataAccess.CRUD;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -40,5 +41,16 @@ namespace Core
             var ucrud = new UsersCRUDFactory();
             return ucrud.RetrieveById<Users>(user);
         }
+
+        public Users RetrieveUserByEmailAndPassword(string email, string password)
+        {
+            var mm = new UsersCRUDFactory();
+            var userList = mm.RetrieveAll<Users>();
+
+            var existingUser = userList.FirstOrDefault(u => u.Email == email && u.Password == password);
+            return existingUser;
+        }
     }
+
+   
 }
