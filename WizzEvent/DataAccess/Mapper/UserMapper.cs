@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mapper
 {
-    public class UserInformationMapper : ISqlStatements, IObjectMapper
+    public class UserMapper : ISqlStatements, IObjectMapper
     {
         public BaseDTO BuildObject(Dictionary<string, object> row)
         {
-            var userDTO = new UserInformation
+            var userDTO = new User
             {
                 Id = (int)row["IdUser"],
                 Nombre = (string)row["Nombre"],
@@ -42,7 +42,7 @@ namespace DataAccess.Mapper
         public SQLOperation GetCreateStatement(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "CRE_USER_PR"; 
+            sqlOperation.ProcedureName = "CRE_USER_PR";
 
             var user = (User)dto;
 
@@ -62,7 +62,7 @@ namespace DataAccess.Mapper
         public SQLOperation GetDeleteStatement(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "DEL_USER_PR"; 
+            sqlOperation.ProcedureName = "DEL_USER_PR";
 
             var user = (User)dto;
 
@@ -74,16 +74,16 @@ namespace DataAccess.Mapper
         public SQLOperation GetRetrieveAllStatement()
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "RET_ALL_USERS_PR"; /
+            sqlOperation.ProcedureName = "RET_ALL_USERS_PR";
             return sqlOperation;
         }
 
         public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "RET_BY_ID_USER_PR"; 
+            sqlOperation.ProcedureName = "RET_BY_ID_USER_PR";
 
-            var user = (UserInformation)dto;
+            var user = (User)dto;
             sqlOperation.AddIntParam("P_ID", user.Id);
 
             return sqlOperation;
@@ -92,7 +92,7 @@ namespace DataAccess.Mapper
         public SQLOperation GetUpdateStatement(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "UPD_USER_PR"; 
+            sqlOperation.ProcedureName = "UPD_USER_PR";
 
             var user = (User)dto;
 

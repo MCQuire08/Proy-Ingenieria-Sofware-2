@@ -89,5 +89,21 @@ namespace DataAccess.CRUD
             var sqlOperation = _mapper.GetUpdateStatement(dto);
             _dao.ExecuteQueryProcedure(sqlOperation);
         }
+
+        public string Generate(OTP otp)
+        {
+            var random = new Random();
+            var otpCode = random.Next(100000, 999999).ToString();
+
+            otp.OTPCode = otpCode;
+
+            return otpCode;
+        }
+
+        public bool Validate(string generatedOTP, string enteredOTP)
+        {
+            return generatedOTP == enteredOTP;
+        }
+
     }
 }

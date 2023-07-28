@@ -12,45 +12,45 @@ namespace Core
 {
     public class UserManager
     {
-        public void Create(Users user)
+        public void Create(User user)
         {
-            var mm = new UsersCRUDFactory();
+            var mm = new UserCRUDFactory();
             mm.Create(user);
         }
 
-        public void Update(Users user)
+        public void Update(User user)
         {
-            var mm = new UsersCRUDFactory();
+            var mm = new UserCRUDFactory();
             mm.Update(user);
         }
 
-        public void Delete(Users user)
+        public void Delete(User user)
         {
-            var mm = new UsersCRUDFactory();
+            var mm = new UserCRUDFactory();
             mm.Delete(user);
         }
 
-        public List<Users> RetrieveAll()
+        public List<User> RetrieveAll()
         {
-            var mm = new UsersCRUDFactory();
-            return mm.RetrieveAll<Users>();
+            var mm = new UserCRUDFactory();
+            return mm.RetrieveAll<User>();
         }
 
-        public Users RetrieveById(Users user)
+        public Users RetrieveById(User user)
         {
-            var ucrud = new UsersCRUDFactory();
+            var ucrud = new UserCRUDFactory();
             return ucrud.RetrieveById<Users>(user);
         }
 
-        public Users RetrieveUserByEmailAndPassword(string email, string password)
+        /*public Users RetrieveUserByEmailAndPassword(string email, string password)
         {
-            var mm = new UsersCRUDFactory();
+            var mm = new UserCRUDFactory();
             var userList = mm.RetrieveAll<Users>();
 
             var existingUser = userList.FirstOrDefault(u => u.Email == email && u.Password == password);
             return existingUser;
-        }
+        }*/
     }
 
-   
+
 }

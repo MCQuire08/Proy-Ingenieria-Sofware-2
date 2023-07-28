@@ -20,7 +20,6 @@ namespace DataAccess.Mapper
                 OTPCode = (string)row["OTPCode"],
                 DeliveryMethod = (string)row["DeliveryMethod"],
                 DeliveryAddress = (string)row["DeliveryAddress"],
-                // Puedes agregar más propiedades si es necesario
             };
             return otpDTO;
         }

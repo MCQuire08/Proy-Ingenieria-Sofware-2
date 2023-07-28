@@ -1,4 +1,5 @@
-﻿using DataAccess.DAO;
+﻿using DataAccess.CRUD;
+using DataAccess.DAO;
 using DataAccess.Mapper;
 using DTOs;
 using System;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.CRUD
 {
-    public class UserInformationCRUDFactory : CrudFactory
+    public class UserCRUDFactory : CrudFactory
     {
         UserMapper _mapper;
 
-        public UserInformationCRUDFactory()
+        public UserCRUDFactory()
         {
             _dao = SqlDao.GetInstance();
             _mapper = new UserMapper();
@@ -29,6 +30,11 @@ namespace DataAccess.CRUD
         {
             var sqlOperation = _mapper.GetDeleteStatement(dto);
             _dao.ExecuteProcedure(sqlOperation);
+        }
+
+        public override T Retrieve<T>()
+        {
+            throw new NotImplementedException();
         }
 
         public override List<T> RetrieveAll<T>()
@@ -69,7 +75,7 @@ namespace DataAccess.CRUD
 
             if (lstUsers.Count > 0)
             {
-                return lstUsers[0]; 
+                return lstUsers[0];
             }
 
             return default(T);

@@ -9,35 +9,38 @@ namespace WebApp.Controllers
     [Route("api/[controller]")]
     public class OTPController : ControllerBase
     {
+        private OTPManager _otpManager;
+
+        public OTPController()
+        {
+            _otpManager = new OTPManager();
+        }
+
         [HttpPost("Generate")]
         public IActionResult GenerateOTP([FromBody] OTPRequestData otpRequest)
         {
             try
             {
-                if (string.IsNullOrEmpty(otpRequest.DeliveryAddress) || string.IsNullOrEmpty(otpRequest.DeliveryMethod))
-                {
-                    return BadRequest("Invalid OTP request data.");
-                }
-
-                var random = new Random();
-                var otpCode = random.Next(100000, 999999).ToString();
-
-                // Create an instance of the OTPManager to save the generated OTP to the database.
-                var otpManager = new OTPManager();
-                var otpDTO = new OTP
-                {
-                    UserId = otpRequest.UserId,
-                    OTPCode = otpCode,
-                    DeliveryMethod = otpRequest.DeliveryMethod,
-                    DeliveryAddress = otpRequest.DeliveryAddress
-                };
-                otpManager.CreateOTP(otpDTO);
-
-                return Ok(new { Message = "OTP generated and sent successfully." });
+                var otpCode = _otpManager.GenerateOTP(otpRequest);
+                return Ok(new { Message = "OTP generated and sent successfully.", OTPCode = otpCode });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error generating and sending OTP: {ex.Message}");
+            }
+        }
+
+        [HttpPost("Validate")]
+        public IActionResult ValidateOTP([FromBody] OTPValidationData otpValidation)
+        {
+            try
+            {
+                bool isValid = _otpManager.ValidateOTP(otpValidation.GeneratedOTP, otpValidation.EnteredOTP);
+                return Ok(new { valid = isValid });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error validating OTP: {ex.Message}");
             }
         }
     }

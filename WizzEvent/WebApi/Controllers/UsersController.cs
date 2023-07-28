@@ -91,7 +91,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login(User user)
         {
@@ -113,6 +113,6 @@ namespace WebApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
+        }*/
     }
 }

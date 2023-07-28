@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOs
 {
-    public class UserInformation : BaseDTO
+    public class User : BaseDTO
     {
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
@@ -17,5 +17,6 @@ namespace DTOs
         public string CedulaImagen { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+
     }
 }
