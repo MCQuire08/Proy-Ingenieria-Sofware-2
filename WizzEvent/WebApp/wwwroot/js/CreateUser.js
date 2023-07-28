@@ -69,6 +69,39 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
+    function crearUsuario() {
+        if (validarFormulario()) {
+            const user = {
+                Nombre: document.getElementById('nombre').value,
+                Apellidos: document.getElementById('apellidos').value,
+                TipoIdentificacion: document.getElementById('tipoIdentificacion').value,
+                NumeroIdentificacion: document.getElementById('numeroIdentificacion').value,
+                Email: document.getElementById('email').value,
+                Telefono: document.getElementById('telefono').value,
+                CedulaImagen: document.getElementById('cedulaImagen').value,
+                Password: document.getElementById('password').value,
+                ConfirmPassword: document.getElementById('confirmPassword').value,
+            };
+
+            fetch('/api/Users/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    mostrarExito('Usuario creado correctamente.');
+                })
+                .catch(error => {
+                    mostrarError('Error al crear el usuario.');
+                    console.error(error);
+                });
+        }
+    }
+
+
     function mostrarError(mensaje) {
         Swal.fire({
             icon: 'error',
@@ -88,8 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        if (validarFormulario()) {
-            form.submit();
-        }
+        crearUsuario();
     });
 });
