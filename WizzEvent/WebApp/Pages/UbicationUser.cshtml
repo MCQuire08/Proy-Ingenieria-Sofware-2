@@ -1,0 +1,30 @@
+﻿@page
+@model WebApp.Pages.UbicationUserModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Usuarios - Ubicacion</title>
+    <link rel="stylesheet" type="text/css" href="~/css/CreateUserStyles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhFSvGQa0QBc0LcYRf88spbk3vxuSZHvw&callback=initMap" async defer></script>
+    <script src="~/js/UbicationUser.js"></script>
+</head>
+<body>
+    <div class="timeline">
+        <div class="step">Información General</div>
+        <div class="step active">Ubicación</div>
+        <div class="step">Autenticación</div>
+    </div>
+
+    <div class="content">
+        <div id="map" style="height: 400px;"></div>
+    </div>
+
+    <div class="buttons">
+        <button class="back-button" onclick="goBack()">Atrás</button>
+        <button class="next-button" onclick="goNext()">Siguiente</button> 
+    </div>
+</body>
+</html>
