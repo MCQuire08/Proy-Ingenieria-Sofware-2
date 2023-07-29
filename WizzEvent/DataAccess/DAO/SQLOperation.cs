@@ -31,10 +31,6 @@ namespace DataAccess.DAO
 
         }
 
-        public void AddFloatParam(string paramName, float paramValue)
-        {
-            Parameters.Add(new SqlParameter(paramName, paramValue));
-        }
        
 
     }
