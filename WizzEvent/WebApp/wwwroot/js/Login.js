@@ -1,29 +1,48 @@
-﻿async function validarLoginFormulario() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+﻿
+$(document).ready(function () {
+    
+    view.InitView();
+
+})
+
+
+async function login(email, password) {
+    const encodedEmail = encodeURIComponent(email);
+    const encodedPassword = encodeURIComponent(password);
+
+    const apiUrl = `https://localhost:7152/api/Users/Login?email=${encodedEmail}&password=${encodedPassword}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error('Login failed. Please check your credentials.');
+        }
+    } catch (error) {
+        throw new Error('An error occurred while trying to log in.');
+    }
+}
+
+async function validarLoginFormulario() {
+    const email = $("#email").val();
+    const password = $("#password").val();
 
     if (!email || !password) {
         mostrarError('Todos los campos son requeridos.');
         return false;
     }
 
-    const response = await loginUser(email, password);
-
-    if (response.ok) {
-        const user = await response.json();
+    try {
+        const user = await login(email, password);
         mostrarExito('¡Inicio de sesión exitoso! Bienvenido, ' + user.Nombre);
-        window.location.href = '/Home';
-    } else {
-        const errorMessage = await response.text();
-        mostrarError(errorMessage);
+        window.location.href = '/Index';
+    } catch (error) {
+        mostrarError(error.message);
         return false;
     }
 }
 
-async function loginUser(email, password) {
-    const response = await fetch(`api/Users/Login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
-    return response;
-}
 
 function mostrarError(mensaje) {
     Swal.fire({

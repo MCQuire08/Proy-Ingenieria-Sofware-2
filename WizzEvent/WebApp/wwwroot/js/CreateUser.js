@@ -83,21 +83,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 ConfirmPassword: document.getElementById('confirmPassword').value,
             };
 
-            fetch('/api/Users/Create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    mostrarExito('Usuario creado correctamente.');
-                })
-                .catch(error => {
-                    mostrarError('Error al crear el usuario.');
-                    console.error(error);
-                });
+            var ctrlActions = new ControlActions();
+            var serviceToDelete ="Users"+ "/Create";
+
+            ctrlActions.PostToAPI(serviceToDelete, user, function (data) {
+
+                mostrarExito('Usuario creado correctamente.');
+
+            });
         }
     }
 
@@ -116,6 +109,9 @@ document.addEventListener('DOMContentLoaded', function () {
             title: 'Buen trabajo',
             text: mensaje,
         });
+    }
+    function goNext() {
+        window.location.href = 'UbicationUser';
     }
 
     const form = document.querySelector('form');
