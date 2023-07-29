@@ -116,8 +116,8 @@ namespace DataAccess.Mapper
             sqlOperation.ProcedureName = "RET_BY_EMAIL_AND_PASSWORD_USER_PR";
 
             var user = (User)dto;
-            sqlOperation.AddIntParam("P_EMAIL", user.Email);
-            sqlOperation.AddIntParam("P_PASSWORD", user.Password);
+            sqlOperation.AddVarcharParam("P_EMAIL", user.Email);
+            sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
 
             return sqlOperation;
         }

@@ -34,10 +34,7 @@ namespace DataAccess.CRUD
             _dao.ExecuteQueryProcedure(sqlOperation);
         }
 
-        public override T Retrieve<T>()
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public override List<T> RetrieveAll<T>()
         {

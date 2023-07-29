@@ -32,10 +32,6 @@ namespace DataAccess.CRUD
             _dao.ExecuteProcedure(sqlOperation);
         }
 
-        public override T Retrieve<T>()
-        {
-            throw new NotImplementedException();
-        }
 
         public override List<T> RetrieveAll<T>()
         {
@@ -87,7 +83,7 @@ namespace DataAccess.CRUD
             _dao.ExecuteProcedure(sqlOperation);
         }
 
-        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
+        public T RetrieveByEmailAndPassword<T>(BaseDTO dto)
         {
             var user = (User)dto;
             var lstUsers = new List<T>();

@@ -68,6 +68,11 @@ namespace DataAccess.Mapper
             return sqlOperation;
         }
 
+        public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
         public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)
         {
             var otp = (OTP)dto;
