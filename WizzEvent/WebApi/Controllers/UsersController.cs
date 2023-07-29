@@ -90,29 +90,23 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        /*[HttpPost]
+        [HttpGet]
         [Route("Login")]
-        public async Task<IActionResult> Login(User user)
+        public async Task<IActionResult> Login(string email, string password)
         {
             try
             {
+                var correo = new User { Email = email };
+                var contrasenia = new User { Password = password };
                 var userManager = new UserManager();
-                var existingUser = userManager.RetrieveUserByEmailAndPassword(user.Email, user.Password);
+                var result = userManager.RetrieveByEmailAndPassword(email, password);
+                return Ok(result);
 
-                if (existingUser != null)
-                {
-                    return Ok(existingUser);
-                }
-                else
-                {
-                    return BadRequest("Usuario no encontrado. Por favor, verifique sus credenciales.");
-                }
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-        }*/
+        }
     }
 }

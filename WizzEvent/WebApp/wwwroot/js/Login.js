@@ -12,7 +12,7 @@
     if (response.ok) {
         const user = await response.json();
         mostrarExito('¡Inicio de sesión exitoso! Bienvenido, ' + user.Nombre);
-        return true;
+        window.location.href = '/Home';
     } else {
         const errorMessage = await response.text();
         mostrarError(errorMessage);
@@ -21,14 +21,7 @@
 }
 
 async function loginUser(email, password) {
-    const response = await fetch('api/Users/Login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-    });
-
+    const response = await fetch(`api/Users/Login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
     return response;
 }
 

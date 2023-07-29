@@ -42,14 +42,12 @@ namespace Core
             return ucrud.RetrieveById<Users>(user);
         }
 
-        /*public Users RetrieveUserByEmailAndPassword(string email, string password)
+        public User RetrieveByEmailAndPassword(string email, string password)
         {
-            var mm = new UserCRUDFactory();
-            var userList = mm.RetrieveAll<Users>();
-
-            var existingUser = userList.FirstOrDefault(u => u.Email == email && u.Password == password);
-            return existingUser;
-        }*/
+            var user = new User { Email = email, Password = password };
+            var ucrud = new UserCRUDFactory();
+            return ucrud.RetrieveByEmailAndPassword<User>(user);
+        }
     }
 
 

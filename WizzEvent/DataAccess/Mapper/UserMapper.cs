@@ -109,5 +109,17 @@ namespace DataAccess.Mapper
 
             return sqlOperation;
         }
+
+        public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
+        {
+            var sqlOperation = new SQLOperation();
+            sqlOperation.ProcedureName = "RET_BY_EMAIL_AND_PASSWORD_USER_PR";
+
+            var user = (User)dto;
+            sqlOperation.AddIntParam("P_EMAIL", user.Email);
+            sqlOperation.AddIntParam("P_PASSWORD", user.Password);
+
+            return sqlOperation;
+        }
     }
 }

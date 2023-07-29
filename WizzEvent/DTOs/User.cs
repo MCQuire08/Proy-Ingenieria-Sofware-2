@@ -19,4 +19,10 @@ namespace DTOs
         public string ConfirmPassword { get; set; }
 
     }
+    public class LoginCredentials : BaseDTO
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
 }
