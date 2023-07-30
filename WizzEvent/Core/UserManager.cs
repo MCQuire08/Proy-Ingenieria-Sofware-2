@@ -23,6 +23,12 @@ namespace Core
             mm.Update(user);
         }
 
+        public void UpdatePassword(string email,string password)
+        {
+            var mm = new UserCRUDFactory();
+            mm.UpdatePassword(email,password);
+        }
+
         public void Delete(User user)
         {
             var mm = new UserCRUDFactory();
@@ -46,6 +52,12 @@ namespace Core
             var user = new User { Email = email, Password = password };
             var ucrud = new UserCRUDFactory();
             return ucrud.RetrieveByEmailAndPassword<User>(user);
+        }
+        public User RetrieveByEmail(string email)
+        {
+           
+            var ucrud = new UserCRUDFactory();
+            return ucrud.RetrieveByEmail<User>(email);
         }
     }
 

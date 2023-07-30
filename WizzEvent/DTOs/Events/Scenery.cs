@@ -13,5 +13,6 @@ namespace DTOs.Events
         public string Name { get; set; }
         [Required(ErrorMessage = "Scenery location is required.")]
         public string Location { get; set; }
+
     }
 }

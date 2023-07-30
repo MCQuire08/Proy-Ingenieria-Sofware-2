@@ -58,6 +58,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("UpdatePassword")]
+        public async Task<IActionResult> UpdatePassword(string email, string password)
+        {
+            try
+            {
+                var userManager = new UserManager();
+                userManager.UpdatePassword(email,password);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet]
         [Route("RetrieveAll")]
         public async Task<IActionResult> RetrieveAll()
@@ -83,6 +99,23 @@ namespace WebApi.Controllers
                 var user = new User { Id = id };
                 var userManager = new UserManager();
                 var result = userManager.RetrieveById(user);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("RetrieveByEmail")]
+        public async Task<IActionResult> RetrieveByEmail(string email)
+        {
+            try
+            {
+               
+                var userManager = new UserManager();
+                var result = userManager.RetrieveByEmail(email);
                 return Ok(result);
             }
             catch (Exception ex)
