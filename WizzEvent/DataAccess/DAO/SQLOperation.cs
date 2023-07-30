@@ -1,6 +1,7 @@
 ﻿using DTOs;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -46,6 +47,9 @@ namespace DataAccess.DAO
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
 
-
+        internal void AddIntParam(string v, ParameterDirection output)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

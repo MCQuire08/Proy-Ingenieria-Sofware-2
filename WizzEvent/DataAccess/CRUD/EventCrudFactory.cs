@@ -62,8 +62,29 @@ namespace DataAccess.CRUD
 
         public override T RetrieveById<T>(BaseDTO dto)
         {
-            throw new NotImplementedException();
+            var eevent = (Event)dto;
+            var lstEvents = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveByIDStatement(eevent);
+
+            var result = _dao.ExecuteQueryProcedure(sqlOperation); ;
+
+            if (result.Count > 0)
+            {
+                var objs = _mapper.BuildObjects(result);
+                foreach (var obj in objs)
+                {
+                    lstEvents.Add((T)Convert.ChangeType(obj, typeof(T)));
+                }
+            }
+
+            if (result.Count > 0) 
+            {
+                return lstEvents[0];
+            }
+
+            return default(T);
         }
+
 
         public override void Update(BaseDTO dto)
         {

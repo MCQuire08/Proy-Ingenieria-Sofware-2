@@ -25,6 +25,12 @@ namespace Core
             return crud.RetrieveAll<Event>();
         }
 
+        public Event RetrieveByIdEvent(Event eevent)
+        {
+            var crud = new EventCrudFactory();
+            return crud.RetrieveById<Event>(eevent);
+        }
+
         public void UpdateEvent(Event eevent)
         {
             var crud = new EventCrudFactory();
