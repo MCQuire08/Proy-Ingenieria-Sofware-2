@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Pagess\" />
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

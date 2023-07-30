@@ -40,3 +40,10 @@ function mostrarExito(mensaje) {
         text: mensaje,
     });
 }
+
+$(document).ready(function () {
+   
+    $("#btnLogin").hide();
+    $("#btnSingOut").hide();
+   
+});
