@@ -31,9 +31,3 @@
      });
 }
 
-function goBack() {
-    window.location.href = 'CreateUser'
-}
-function goNext() {
-    window.location.href = 'OTP';
-}

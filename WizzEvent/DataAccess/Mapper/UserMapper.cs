@@ -24,6 +24,7 @@ namespace DataAccess.Mapper
                 CedulaImagen = (string)row["CedulaImagen"],
                 Password = (string)row["Password"],
                 ConfirmPassword = (string)row["ConfirmPassword"]
+                Ubicacion = (string)row["Ubicacion"]
             };
             return userDTO;
         }
@@ -55,6 +56,7 @@ namespace DataAccess.Mapper
             sqlOperation.AddVarcharParam("P_CEDULA_IMAGEN", user.CedulaImagen);
             sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
             sqlOperation.AddVarcharParam("P_CONFIRM_PASSWORD", user.ConfirmPassword);
+            sqlOperation.AddVarcharParam("P_UBICACION", user.Ubicacion);
 
             return sqlOperation;
         }

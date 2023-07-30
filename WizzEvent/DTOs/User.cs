@@ -17,6 +17,7 @@ namespace DTOs
         public string CedulaImagen { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public string Ubicacion { get; set; }
 
     }
     public class LoginCredentials : BaseDTO
