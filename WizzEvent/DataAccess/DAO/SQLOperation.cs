@@ -24,13 +24,6 @@ namespace DataAccess.DAO
             Parameters.Add(new SqlParameter(paramName, paramValue));
 
         }
-
-        public void AddIntParam(string paramName, int paramValue){
-        
-        Parameters.Add(new SqlParameter(paramName,paramValue));
-
-        }
-
         public void AddPictureParam(string paramName, byte[] paramValue)
         {
             Parameters.Add(new SqlParameter(paramName, paramValue));
@@ -46,6 +39,9 @@ namespace DataAccess.DAO
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
 
-
+        public void AddIntParam(string v, int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

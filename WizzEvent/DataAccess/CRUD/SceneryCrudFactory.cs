@@ -148,6 +148,11 @@ namespace DataAccess.CRUD
 
             return lstSeats;
         }
+
+        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

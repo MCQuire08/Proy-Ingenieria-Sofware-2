@@ -1,0 +1,67 @@
+﻿@page
+@model WebApp.Pages.CreateUserModel
+@{
+}
+
+<head>
+    <title>Registro de Gestores - Información General</title>
+    <link rel="stylesheet" type="text/css" href="~/css/CreateUserStyles.css">
+    <script src="~/js/Createuserge.js"></script>
+</head>
+<body>
+  
+    <div class="form-container">
+        <h2>Registro de vendedores</h2>
+        <form method="post" action="/Ubicacion">
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre">
+                </div>
+                <div class="form-column">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos" name="apellidos">
+                </div>
+                <div class="form-column">
+                    <label for="tipoIdentificacion">Tipo de Identificación:</label>
+                    <select id="tipoIdentificacion" name="tipoIdentificacion">
+                        <option value="nacional">Nacional</option>
+                        <option value="extranjero">Extranjero</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="numeroIdentificacion">Número de Identificación:</label>
+                    <input type="text" id="numeroIdentificacion" name="numeroIdentificacion">
+                </div>
+                <div class="form-column">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-column">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-column">
+                    <label for="cedulaImagen">Cargar Imagen de Cédula:</label>
+                    <input type="file" id="cedulaImagen" name="cedulaImagen" accept=".jpg, .png, .pdf">
+                </div>
+                <div class="form-column">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-column">
+                    <label for="confirmPassword">Confirmar Contraseña:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword">
+                </div>
+            </div>
+
+            <button type="submit" class="next-button">Siguiente</button>
+        </form>
+    </div>
+</body>
