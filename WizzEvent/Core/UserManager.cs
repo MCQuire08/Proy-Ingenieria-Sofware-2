@@ -1,6 +1,5 @@
 ﻿using DataAccess;
 using DataAccess.CRUD;
-using DocumentFormat.OpenXml.Spreadsheet;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -36,10 +35,10 @@ namespace Core
             return mm.RetrieveAll<User>();
         }
 
-        public Users RetrieveById(User user)
+        public User RetrieveById(User user)
         {
             var ucrud = new UserCRUDFactory();
-            return ucrud.RetrieveById<Users>(user);
+            return ucrud.RetrieveById<User>(user);
         }
 
         public User RetrieveByEmailAndPassword(string email, string password)

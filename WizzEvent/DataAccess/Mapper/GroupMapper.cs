@@ -77,6 +77,11 @@ namespace DataAccess.Mapper
 
         }
 
+        public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
         public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)
         {
             throw new NotImplementedException();

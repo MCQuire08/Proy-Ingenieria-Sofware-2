@@ -29,10 +29,7 @@ namespace DataAccess.CRUD
             throw new NotImplementedException();
         }
 
-        public override T Retrieve<T>()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public override List<T> RetrieveAll<T>()
         {
@@ -52,6 +49,11 @@ namespace DataAccess.CRUD
             }
 
             return lstLogs;
+        }
+
+        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
+        {
+            throw new NotImplementedException();
         }
 
         public override T RetrieveById<T>(BaseDTO dto)

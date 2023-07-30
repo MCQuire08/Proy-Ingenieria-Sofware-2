@@ -1,11 +1,9 @@
-﻿using DataAccess.DAO;
+﻿
+using DataAccess.DAO;
 using DTOs;
 using DTOs.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DataAccess.Mapper
 {
@@ -65,6 +63,11 @@ namespace DataAccess.Mapper
             sqlOperation.ProcedureName = "RET_ALL_CATEGORY_PR";
 
             return sqlOperation;
+        }
+
+        public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
+        {
+            throw new NotImplementedException();
         }
 
         public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)

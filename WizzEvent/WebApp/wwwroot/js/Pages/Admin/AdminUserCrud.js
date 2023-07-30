@@ -62,7 +62,7 @@ function AdminUserCrudController() {
         columns[3] = { 'data': 'numeroIdentificacion' };
         columns[4] = { 'data': 'email' };
         columns[5] = { 'data': 'telefono' };
-        columns[6] = { 'data': 'age' };
+        columns[6] = { 'data': 'rol' };
 
         columns[7] = {
             'data': null,

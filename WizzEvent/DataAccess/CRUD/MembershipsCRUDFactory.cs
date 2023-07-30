@@ -35,11 +35,6 @@ namespace DataAccess.CRUD
             _dao.ExecuteProcedure(sqlOperation);
         }
 
-        public override T Retrieve<T>()
-        {
-            throw new NotImplementedException();
-        }
-
         public override List<T> RetrieveAll<T>()
         {
 
@@ -59,6 +54,11 @@ namespace DataAccess.CRUD
 
             return lstMemberships;
 
+        }
+
+        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
+        {
+            throw new NotImplementedException();
         }
 
         public override T RetrieveById<T>(BaseDTO dto)
