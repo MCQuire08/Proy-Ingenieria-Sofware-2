@@ -10,12 +10,11 @@
         view.LoadCategories();
         view.LoadImages();
 
-        
 
         $('#btnEnviar').on('click', function () {
             view.GetImages();
             if (view.Validation()) {
-                //view.CreateEvent();
+                view.CreateEvent();
             }
         });
     }
@@ -23,8 +22,6 @@
     this.Validation = function () {
         var view = new CreateEventController();
         var event = view.GetEvent();
-
-        console.log(view.GetEvent());
 
         if (
             event.Name === "" ||
@@ -52,35 +49,213 @@
             return false;
         }
 
+        if ($('#stlCategory').val() === '') {
+            alert('No hay categoria');
+            return false;
+        }
+
         return true;
     };
 
-    this.CreateEvent = function () {
+    this.CreateEvent = async function () {
+        const url = 'https://localhost:7152/api/Event/CreateEvent';
         var view = new CreateEventController();
-        var serviceToCreateEvent = this.ApiService + "/CreateEvent";
-        var ctrlActions = new ControlActions();
         var event = view.GetEvent();
-        var check = {};
+        var checks = {
+            checkEvent: false,
+            checkContact: false,
+            checkImage: false,
+            checkCategory: false
+        };
 
-        $.ajax({
-            url: ctrlActions.GetUrlApiService( serviceToCreateEvent),
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: event,
-            success: function (data) {
-                check.Event = true;
-            },
-            error: function () {
-                check.Event = false;
+        var response1;
+
+        try {
+            response1 = await $.ajax({
+                url: url,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(event),
+            });
+            checks.checkEvent = true;
+        } catch (error) {
+            console.error('Error al crear el evento:', error.statusText);
+        }
+
+        const eventId = await view.GetIdEvent(response1);
+
+        // Utilizamos Promise.all para esperar a que todas las operaciones asincrónicas se completen
+        const [checkContacts, checkImages, checkCategory] = await Promise.all([
+            view.CreateContacts(eventId),
+            view.CreateImages(eventId),
+            view.CreateCategory(eventId)
+        ]);
+
+        checks.checkContact = checkContacts;
+        checks.checkImage = checkImages;
+        checks.checkCategory = checkCategory;
+
+        console.log(checks);
+        if (Object.values(checks).every(check => check === true)) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Evento creado correctamente',
+                text: 'El evento se ha creado con éxito.',
+            });
+        } else {
+            let errorMessages = [];
+
+            if (!checks.checkEvent) {
+                errorMessages.push('Error al crear el evento.');
             }
+
+            if (!checks.checkContact) {
+                errorMessages.push('Error al crear los contactos.');
+            }
+
+            if (!checks.checkImage) {
+                errorMessages.push('Error al crear las imágenes.');
+            }
+
+            if (!checks.checkCategory) {
+                errorMessages.push('Error al crear la categoría.');
+            }
+            const errorMessage = errorMessages.join('\n');
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al crear el evento',
+                text: errorMessage,
+            });
+        }
+    };
+
+
+
+    this.CreateCategory = async function (idEvent) {
+        var view = new CreateEventController();
+        const apiUrl = 'https://localhost:7152/api/Event/AddCategoryToEvent?idCategory=' + view.GetCategory() + '&idEvent=' + idEvent;
+
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: apiUrl,
+                method: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('Categoría agregada al evento correctamente.');
+                    resolve(true);
+                },
+                error: function () {
+                    console.error('Error al agregar la categoría al evento.');
+                    resolve(false); 
+                }
+            });
+        });
+    };
+
+
+    this.CreateImages = async function (idEvent) {
+        var view = new CreateEventController();
+        var images = view.GetImages();
+        const url_images = 'https://localhost:7152/api/Event/AddImageToEvent';
+
+        const promises = images.map(function (image) {
+            return new Promise(function (resolve, reject) {
+                image.idEvent = idEvent;
+                $.ajax({
+                    url: url_images,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(image),
+                    success: function (data) {
+                        console.log('Imagen creada:', data);
+                        resolve(true); 
+                    },
+                    error: function (error) {
+                        console.error('Error al crear la imagen:', error.statusText);
+                        resolve(false); 
+                    }
+                });
+            });
         });
 
+        return Promise.all(promises)
+            .then(function (results) {
+                return results.every(function (result) {
+                    return result === true;
+                });
+            })
+            .catch(function (error) {
+                console.error('Error al crear imágenes:', error);
+                return false;
+            });
+    };
+
+    this.GetIdEvent = async function (event) {
+        const url_get = 'https://localhost:7152/api/Event/RetrieveByIdEvent';
+        
+        try {
+            response1 = await $.ajax({
+                url: url_get,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(event),
+            });
+
+            return response1.id;
+        } catch (error) {
+            console.error('Error:', error.statusText);
+        }
+    }
+
+    this.CreateContacts = function (idEvent) {
+        var view = new CreateEventController();
         var contacts = view.GetContacts();
+        const url = 'https://localhost:7152/api/Event/AddContactToEvent';
+
+        const promises = contacts.map(function (contact) {
+            return new Promise(function (resolve, reject) {
+                contact.idEvent = idEvent;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(contact),
+                    success: function (data) {
+                        console.log('Contacto creado:', data);
+                        resolve(true);
+                    },
+                    error: function (error) {
+                        console.error('Error al crear el contacto:', error);
+                        resolve(false);
+                    }
+                });
+            });
+        });
 
 
+        return Promise.all(promises)
+            .then(function (results) {
+                return results.every(function (result) {
+                    return result === true;
+                });
+            })
+            .catch(function (error) {
+                console.error('Error al crear contactos:', error);
+                return false; 
+            });
+    };
 
+    this.GetCategory = function () {
+        const selectElement = $('#stlCategory');
+        const selectedCategoryId = selectElement.val();
+        const selectedCategoryName = selectElement.find('option:selected').text();
 
+        if (selectedCategoryId && selectedCategoryName) {
+            return selectedCategoryId;
+        } else {
+            return null;
+        }
     }
 
     this.GetEvent = function () {
@@ -90,7 +265,7 @@
             description: $('#txtDescription').val(),
             modality: $('#txtModality').val(),
             eventDate: $('#txtEventDate').val(),
-            totalTickets: $('#txtTotalTickets'),
+            totalTickets: $('#txtTotalTickets').val(),
             information: $('#txtInformation').val(),
             paymentMethod: $('#stlPayment').val(),
             freeTickets: $('#txtFreeTickets').val(),
@@ -106,28 +281,13 @@
 
         $('#table-contacts tr:not(:first)').each(function () {
             var name = $(this).find('td:eq(0)').text();
-            var contact = $(this).find('td:eq(1)').text();
+            var textContact = $(this).find('td:eq(1)').text();
 
-            contacts.push({ Name: name, Contact: contact });
+            contacts.push({ name: name, textContact: textContact });
         });
 
         return contacts;
     };
-
-    this.GetImages = function () {
-        var spamObjects = [];
-
-        var spamElements = $("#container-images-names .spam");
-
-        spamElements.each(function () {
-            var spamObject = {
-                name: $(this).text(),
-                url: $(this).data - url
-            };
-
-            spamObjects.push(spamObject);
-        });
-    }
 
     this.AddContact = function () {
         $("#btnCreateContact").on('click', function () {
@@ -205,6 +365,22 @@
         });
     }
 
+    this.GetImages = function () {
+        var spamObjects = [];
+
+        var spamElements = $("#container-images-names .badge");
+
+        spamElements.each(function () {
+            var spamObject = {
+                name: $(this).text(),
+                url: $(this).attr("data-url")
+            };
+
+            spamObjects.push(spamObject);
+        });
+
+        return spamObjects; // Devolver el arreglo spamObjects
+    };
 
 }
 
