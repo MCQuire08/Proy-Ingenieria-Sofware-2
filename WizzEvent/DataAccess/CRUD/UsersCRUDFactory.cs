@@ -32,10 +32,6 @@ namespace DataAccess.CRUD
             _dao.ExecuteProcedure(sqlOperation);
         }
 
-        public override T Retrieve<T>()
-        {
-            throw new NotImplementedException();
-        }
 
         public override List<T> RetrieveAll<T>()
         {
@@ -87,11 +83,42 @@ namespace DataAccess.CRUD
             _dao.ExecuteProcedure(sqlOperation);
         }
 
-        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
+        public void UpdatePassword(string email, string password)
+        {
+            var sqlOperation = _mapper.GetUpdatePasswordStatement(email,password);
+            _dao.ExecuteProcedure(sqlOperation);
+        }
+
+        public T RetrieveByEmailAndPassword<T>(BaseDTO dto)
         {
             var user = (User)dto;
             var lstUsers = new List<T>();
             var sqlOperation = _mapper.GetRetrieveByEmailAndPassword(user);
+
+            var result = _dao.ExecuteQueryProcedure(sqlOperation);
+
+            if (result.Count > 0)
+            {
+                var objs = _mapper.BuildObjects(result);
+                foreach (var obj in objs)
+                {
+                    lstUsers.Add((T)Convert.ChangeType(obj, typeof(T)));
+                }
+            }
+
+            if (lstUsers.Count > 0)
+            {
+                return lstUsers[0];
+            }
+
+            return default(T);
+        }
+
+        public T RetrieveByEmail<T>(string email)
+        {
+           
+            var lstUsers = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveByEmail(email);
 
             var result = _dao.ExecuteQueryProcedure(sqlOperation);
 

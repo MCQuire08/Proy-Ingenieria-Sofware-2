@@ -2,6 +2,7 @@
 using DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Controllers
 {
@@ -9,39 +10,27 @@ namespace WebApp.Controllers
     [Route("api/[controller]")]
     public class OTPController : ControllerBase
     {
-        private OTPManager _otpManager;
-
-        public OTPController()
+        [HttpPost("GenerateEmail")]
+        public IActionResult GenerateOTPEmail(string email)
         {
-            _otpManager = new OTPManager();
+           
+            var om = new OTPManager(); 
+            var otp =OTPManager.GenerateOTP(6);
+            om.CreateOTPEmail(email,otp);
+               return Ok(otp);
+
+        }
+        [HttpPost("GeneratePhone")]
+        public IActionResult GenerateOTPPhone(string phone)
+        {
+        
+            var om = new OTPManager();
+            var otp = OTPManager.GenerateOTP(6);
+            
+            om.SentOTPPhone(phone, otp);
+            return Ok(otp);
+
         }
 
-        [HttpPost("Generate")]
-        public IActionResult GenerateOTP([FromBody] OTPRequestData otpRequest)
-        {
-            try
-            {
-                var otpCode = _otpManager.GenerateOTP(otpRequest);
-                return Ok(new { Message = "OTP generated and sent successfully.", OTPCode = otpCode });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error generating and sending OTP: {ex.Message}");
-            }
-        }
-
-        [HttpPost("Validate")]
-        public IActionResult ValidateOTP([FromBody] OTPValidationData otpValidation)
-        {
-            try
-            {
-                bool isValid = _otpManager.ValidateOTP(otpValidation.GeneratedOTP, otpValidation.EnteredOTP);
-                return Ok(new { valid = isValid });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error validating OTP: {ex.Message}");
-            }
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using DataAccess;
 using DataAccess.CRUD;
-using DocumentFormat.OpenXml.Spreadsheet;
 using DTOs;
 using System;
 using System.Collections.Generic;
@@ -24,6 +23,12 @@ namespace Core
             mm.Update(user);
         }
 
+        public void UpdatePassword(string email,string password)
+        {
+            var mm = new UserCRUDFactory();
+            mm.UpdatePassword(email,password);
+        }
+
         public void Delete(User user)
         {
             var mm = new UserCRUDFactory();
@@ -36,10 +41,10 @@ namespace Core
             return mm.RetrieveAll<User>();
         }
 
-        public Users RetrieveById(User user)
+        public User RetrieveById(User user)
         {
             var ucrud = new UserCRUDFactory();
-            return ucrud.RetrieveById<Users>(user);
+            return ucrud.RetrieveById<User>(user);
         }
 
         public User RetrieveByEmailAndPassword(string email, string password)
@@ -47,6 +52,12 @@ namespace Core
             var user = new User { Email = email, Password = password };
             var ucrud = new UserCRUDFactory();
             return ucrud.RetrieveByEmailAndPassword<User>(user);
+        }
+        public User RetrieveByEmail(string email)
+        {
+           
+            var ucrud = new UserCRUDFactory();
+            return ucrud.RetrieveByEmail<User>(email);
         }
     }
 
