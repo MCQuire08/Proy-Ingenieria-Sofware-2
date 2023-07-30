@@ -96,7 +96,7 @@
                 CedulaImagen: document.getElementById('cedulaImagen').value,
                 Password: document.getElementById('password').value,
                 ConfirmPassword: document.getElementById('confirmPassword').value,
-                rol: ""
+                ubicacion:"9.934585953536649, -84.08192676606453"
             };
 
             var ctrlActions = new ControlActions();
@@ -153,9 +153,9 @@ function validacionOTPCorreo() {
             cancelButtonText: 'Cancelar',
             showLoaderOnConfirm: true,
             preConfirm: (otp) => {
-                // Here we can compare the OTP entered by the user with the OTP received from the API
+               
                 if (otp === otpValueString) {
-                    // OTP is correct
+                    
                     Swal.fire({
                         icon: 'success',
                         title: 'Codigo OTP valido',
@@ -163,12 +163,12 @@ function validacionOTPCorreo() {
                         confirmButtonText: 'OK'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Llamar a la función crearUsuario() si el OTP es correcto
+                            
                             crearUsuario();
                         }
                     });
                 } else {
-                    // OTP is incorrect
+                    
                     Swal.showValidationMessage('Codigo OTP incorrecto. Por favor, ingrese el codigo correcto.');
                 }
             }
@@ -196,9 +196,9 @@ function validacionOTPTelefono() {
             cancelButtonText: 'Cancelar',
             showLoaderOnConfirm: true,
             preConfirm: (otp) => {
-                // Here we can compare the OTP entered by the user with the OTP received from the API
+               
                 if (otp === otpValueString) {
-                    // OTP is correct
+                   
                     Swal.fire({
                         icon: 'success',
                         title: 'Codigo OTP valido',
@@ -206,12 +206,12 @@ function validacionOTPTelefono() {
                         confirmButtonText: 'OK'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Llamar a la función crearUsuario() si el OTP es correcto
+                            
                             crearUsuario();
                         }
                     });
                 } else {
-                    // OTP is incorrect
+                  
                     Swal.showValidationMessage('Codigo OTP incorrecto. Por favor, ingrese el codigo correcto.');
                 }
             }

@@ -4,19 +4,19 @@ function recoveryController() {
     var self = this;
 
     this.InitView = function () {
-        // Puedes agregar lógica de inicialización de la vista aquí si es necesario.
+       
     }
 
     this.Update = function (email, newPassword) {
         var serviceToUpdate = "https://localhost:7152/api/Users/UpdatePassword";
 
-        // Encode the email and newPassword for the query string
+       
         var queryString = "Email=" + encodeURIComponent(email) + "&Password=" + encodeURIComponent(newPassword);
 
-        // Use the query string in the URL
+      
         var apiUrl = serviceToUpdate + "?" + queryString;
 
-        // Use a simple AJAX call to send the PUT request with the query string
+        
         $.ajax({
             url: apiUrl,
             type: 'PUT',
@@ -27,9 +27,8 @@ function recoveryController() {
                 window.location.href = 'LoginUser';
             },
             error: function (xhr, status, error) {
-                // Handle the error response, if needed
-                // For example, you can show an error message
-                console.error('Error updating password:', error);
+              
+                console.error('Error actualizando la contrasenha:', error);
             }
         });
     }
@@ -121,7 +120,6 @@ var sweetAlertModule = (function () {
     };
 })();
 
-// Main Script
 $(document).ready(function () {
     var view = new recoveryController();
     view.InitView();

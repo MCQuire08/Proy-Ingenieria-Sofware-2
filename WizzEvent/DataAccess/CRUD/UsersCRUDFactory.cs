@@ -25,6 +25,11 @@ namespace DataAccess.CRUD
             var sqlOperation = _mapper.GetCreateStatement(dto);
             _dao.ExecuteQueryProcedure(sqlOperation);
         }
+        public void CreateUserGE(BaseDTO dto)
+        {
+            var sqlOperation = _mapper.GetCreateUserGEStatement(dto);
+            _dao.ExecuteQueryProcedure(sqlOperation);
+        }
 
         public override void Delete(BaseDTO dto)
         {

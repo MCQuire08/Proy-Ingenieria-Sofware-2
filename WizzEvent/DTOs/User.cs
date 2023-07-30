@@ -20,10 +20,6 @@ namespace DTOs
         public string Ubicacion { get; set; }
 
     }
-    public class LoginCredentials : BaseDTO
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+  
 
 }

@@ -23,7 +23,7 @@ namespace DataAccess.Mapper
                 Telefono = (string)row["Telefono"],
                 CedulaImagen = (string)row["CedulaImagen"],
                 Password = (string)row["Password"],
-                ConfirmPassword = (string)row["ConfirmPassword"]
+                ConfirmPassword = (string)row["ConfirmPassword"],
                 Ubicacion = (string)row["Ubicacion"]
             };
             return userDTO;
@@ -56,8 +56,31 @@ namespace DataAccess.Mapper
             sqlOperation.AddVarcharParam("P_CEDULA_IMAGEN", user.CedulaImagen);
             sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
             sqlOperation.AddVarcharParam("P_CONFIRM_PASSWORD", user.ConfirmPassword);
-            sqlOperation.AddVarcharParam("P_UBICACION", user.Ubicacion); // agrega un rol del valor 3, esta es la llave para los roles
-            sqlOperation.AddVarcharParam("P_ROL", "3"); // agrega un rol del valor 3, esta es la llave para los roles
+            sqlOperation.AddVarcharParam("P_UBICACION", user.Ubicacion);
+            sqlOperation.AddVarcharParam("P_ROL", "1");
+
+
+            return sqlOperation;
+        }
+
+        public SQLOperation GetCreateUserGEStatement(BaseDTO dto)
+        {
+            var sqlOperation = new SQLOperation();
+            sqlOperation.ProcedureName = "CRE_USER_CLIENT_PR";
+
+            var user = (User)dto;
+
+            sqlOperation.AddVarcharParam("P_NOMBRE", user.Nombre);
+            sqlOperation.AddVarcharParam("P_APELLIDOS", user.Apellidos);
+            sqlOperation.AddVarcharParam("P_TIPO_IDENTIFICACION", user.TipoIdentificacion);
+            sqlOperation.AddVarcharParam("P_NUMERO_IDENTIFICACION", user.NumeroIdentificacion);
+            sqlOperation.AddVarcharParam("P_EMAIL", user.Email);
+            sqlOperation.AddVarcharParam("P_TELEFONO", user.Telefono);
+            sqlOperation.AddVarcharParam("P_CEDULA_IMAGEN", user.CedulaImagen);
+            sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
+            sqlOperation.AddVarcharParam("P_CONFIRM_PASSWORD", user.ConfirmPassword);
+            sqlOperation.AddVarcharParam("P_UBICACION", user.Ubicacion);
+            sqlOperation.AddVarcharParam("P_ROL", "3");
 
 
             return sqlOperation;

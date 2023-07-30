@@ -11,15 +11,13 @@
     <script src="~/js/UbicationUser.js"></script>
 </head>
 <body>
-    <div class="timeline">
-        <div class="step active">Información General</div>
-        <div class="step">Ubicación</div>
-        <div class="step">Autenticación</div>
+    <div class="form">
+        <h2>Registro de Usuario</h2>
     </div>
 
     <div class="form-container">
         <h2>Información General</h2>
-        <form method="post" action="/Ubicacion">
+        <form>
             <div class="form-row">
                 <div class="form-column">
                     <label for="nombre">Nombre:</label>
@@ -75,7 +73,7 @@
                 <div id="map" style="height: 400px;"></div>
             </div>
             
-            <button type="button" class="next-button">Siguiente</button>
+            <button type="button" class="next-button" id="btn-siguiente" onclick="validarFormulario()">Registrarse</button>
         </form>
     </div>
 </body>
