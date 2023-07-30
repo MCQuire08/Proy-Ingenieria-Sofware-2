@@ -2,8 +2,7 @@
 @model WebApp.Pages.CreateUserModel
 @{
 }
-<!DOCTYPE html>
-<html>
+
 <head>
     <title>Registro de Usuarios - Información General</title>
     <link rel="stylesheet" type="text/css" href="~/css/CreateUserStyles.css">
@@ -41,14 +40,17 @@
                 <div class="form-column">
                     <label for="numeroIdentificacion">Número de Identificación:</label>
                     <input type="text" id="numeroIdentificacion" name="numeroIdentificacion">
+                    
                 </div>
                 <div class="form-column">
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email">
+                    <button onclick="validacionOTPCorreo()">Validacion</button>
                 </div>
                 <div class="form-column">
                     <label for="telefono">Teléfono:</label>
                     <input type="text" id="telefono" name="telefono">
+                    <button onclick="validacionOTPTelefono()">Validacion</button>
                 </div>
             </div>
 
@@ -67,7 +69,7 @@
                 </div>
             </div>
 
-            <button type="button" class="next-button">Siguiente</button>
+            <button type="button" class="next-button" id="btn-siguiente" onclick="validarFormulario()">Siguiente</button>
         </form>
     </div>
 </body>

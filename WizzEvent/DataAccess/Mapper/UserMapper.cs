@@ -42,7 +42,7 @@ namespace DataAccess.Mapper
         public SQLOperation GetCreateStatement(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "CRE_USER_PR";
+            sqlOperation.ProcedureName = "CRE_USER_CLIENT_PR";
 
             var user = (User)dto;
 
@@ -55,6 +55,8 @@ namespace DataAccess.Mapper
             sqlOperation.AddVarcharParam("P_CEDULA_IMAGEN", user.CedulaImagen);
             sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
             sqlOperation.AddVarcharParam("P_CONFIRM_PASSWORD", user.ConfirmPassword);
+            sqlOperation.AddVarcharParam("P_ROL", "3"); // agrega un rol del valor 3, esta es la llave para los roles
+
 
             return sqlOperation;
         }
@@ -110,6 +112,16 @@ namespace DataAccess.Mapper
             return sqlOperation;
         }
 
+        public SQLOperation GetUpdatePasswordStatement(string email,string password) {
+            var sqlOperation = new SQLOperation();
+            sqlOperation.ProcedureName = "UPD_USER_PASSWORD_PR";
+            sqlOperation.AddVarcharParam("P_EMAIL", email);
+            sqlOperation.AddVarcharParam("P_PASSWORD", password); 
+            
+            return sqlOperation;
+
+        }
+
         public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
@@ -118,6 +130,16 @@ namespace DataAccess.Mapper
             var user = (User)dto;
             sqlOperation.AddVarcharParam("P_EMAIL", user.Email);
             sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
+
+            return sqlOperation;
+        }
+
+        public SQLOperation GetRetrieveByEmail(string email)
+        {
+            var sqlOperation = new SQLOperation();
+            sqlOperation.ProcedureName = "RET_BY_EMAIL_USER_PR";
+            sqlOperation.AddVarcharParam("P_EMAIL", email);
+           
 
             return sqlOperation;
         }

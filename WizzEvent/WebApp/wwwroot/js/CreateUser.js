@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+
     function validarFormulario() {
         // Obtener valores de los campos
         const nombre = document.getElementById('nombre').value;
@@ -64,7 +64,22 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
 
-        mostrarExito('Información validada correctamente.');
+        Swal.fire({
+            title: 'Validacion',
+            text: '¿Deseas validar tu correo o tu telefono?',
+            showCancelButton: true,
+            confirmButtonText: 'Correo',
+            cancelButtonText: 'Telefono',
+            reverseButtons: true 
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                validacionOTPCorreo();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                
+                validacionOTPTelefono();
+            }
+        });
 
         return true;
     }
@@ -81,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 CedulaImagen: document.getElementById('cedulaImagen').value,
                 Password: document.getElementById('password').value,
                 ConfirmPassword: document.getElementById('confirmPassword').value,
+                rol: ""
             };
 
             var ctrlActions = new ControlActions();
@@ -110,13 +126,101 @@ document.addEventListener('DOMContentLoaded', function () {
             text: mensaje,
         });
     }
-    function goNext() {
-        window.location.href = 'UbicationUser';
-    }
+   
 
     const form = document.querySelector('form');
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        crearUsuario();
+   
+
+
+function validacionOTPCorreo() {
+
+    var email = document.getElementById('email').value
+
+    const apiUrl = `OTP/GenerateEmail?email=${encodeURIComponent(email)}`;
+    var ctrlActions = new ControlActions();
+    
+    ctrlActions.PostToAPI(apiUrl, "", function (otpValue) {
+
+        var otpValueString = otpValue.toString();
+        Swal.fire({
+            title: 'Ingrese el codigo OTP',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Verificar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            preConfirm: (otp) => {
+                // Here we can compare the OTP entered by the user with the OTP received from the API
+                if (otp === otpValueString) {
+                    // OTP is correct
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Codigo OTP valido',
+                        text: 'El codigo OTP es correcto. Verificacion exitosa.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Llamar a la función crearUsuario() si el OTP es correcto
+                            crearUsuario();
+                        }
+                    });
+                } else {
+                    // OTP is incorrect
+                    Swal.showValidationMessage('Codigo OTP incorrecto. Por favor, ingrese el codigo correcto.');
+                }
+            }
+        });
+
+
     });
-});
+}
+function validacionOTPTelefono() {
+    var phone = document.getElementById('telefono').value
+
+    var ctrlActions = new ControlActions();
+    const apiUrl = `OTP/GeneratePhone?phone=${encodeURIComponent(phone)}`;
+    ctrlActions.PostToAPI(apiUrl,"", function () {
+
+        var otpValueString = otpValue.toString();
+        Swal.fire({
+            title: 'Ingrese el codigo OTP',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Verificar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            preConfirm: (otp) => {
+                // Here we can compare the OTP entered by the user with the OTP received from the API
+                if (otp === otpValueString) {
+                    // OTP is correct
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Codigo OTP valido',
+                        text: 'El codigo OTP es correcto. Verificacion exitosa.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Llamar a la función crearUsuario() si el OTP es correcto
+                            crearUsuario();
+                        }
+                    });
+                } else {
+                    // OTP is incorrect
+                    Swal.showValidationMessage('Codigo OTP incorrecto. Por favor, ingrese el codigo correcto.');
+                }
+            }
+        });
+    });
+
+}
+
+$("#btn-siguiente").click(function () {
+    
+    validarFormulario();
+})
