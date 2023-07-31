@@ -47,12 +47,38 @@ function AdminUserCrudController() {
         });
     };  // falta pulir
 
+    this.retrieveRolById = async function (id) {
+      
+            const apiUrl = `https://localhost:7152/api/Role/RetrieveByID?id=${id}`;
 
+            try {
+                const response = await $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    dataType: 'json'
+                });
+                return response;
+            } catch (error) {
+                console.error('Error retrieving data:', error);
+                return null;
+            }
+        
+    }
+
+    this.getRoleName = function (id) {
+
+        var role = self.retrieveRolById(id);
+
+        var rolName = role.rolName;
+        return rolName;
+    }
     this.LoadTable = function () {
         var ctrlActions = new ControlActions();
         var self = this;
 
         var urlService = ctrlActions.GetUrlApiService(this.ApiService + "/RetrieveAll");
+
+
         var columns = [];
 
       
@@ -62,7 +88,13 @@ function AdminUserCrudController() {
         columns[3] = { 'data': 'numeroIdentificacion' };
         columns[4] = { 'data': 'email' };
         columns[5] = { 'data': 'telefono' };
-        columns[6] = { 'data': 'rol' };
+        columns[6] = {
+            'data': null,
+            'render': function (data, type, row) {
+
+                const rolName = self.getRoleName(row.id)
+                return ' <span>' + rolName + '</span >';;
+            } };
 
         columns[7] = {
             'data': null,
@@ -88,7 +120,7 @@ function AdminUserCrudController() {
             "columns": columns
         });
 
-        // Handle Edit button click
+       
         $("#tblUsers").on('click', '.btn-edit', function () {
             var tr = $(this).closest('tr');
             var row = table.row(tr);
