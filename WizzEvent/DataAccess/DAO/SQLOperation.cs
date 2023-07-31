@@ -1,7 +1,6 @@
 ﻿using DTOs;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -13,7 +12,7 @@ namespace DataAccess.DAO
     public class SQLOperation
     {
         public string ProcedureName { get; set; }
-        public List<SqlParameter> Parameters { get; set;}
+        public List<SqlParameter> Parameters { get; set; }
 
         public SQLOperation()
         {
@@ -26,9 +25,10 @@ namespace DataAccess.DAO
 
         }
 
-        public void AddIntParam(string paramName, int paramValue){
-        
-        Parameters.Add(new SqlParameter(paramName,paramValue));
+        public void AddIntParam(string paramName, int paramValue)
+        {
+
+            Parameters.Add(new SqlParameter(paramName, paramValue));
 
         }
 
@@ -47,9 +47,6 @@ namespace DataAccess.DAO
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
 
-        internal void AddIntParam(string v, ParameterDirection output)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
