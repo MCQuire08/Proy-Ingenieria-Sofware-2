@@ -19,7 +19,7 @@ namespace DTOs.Events
         [Required(ErrorMessage = "Event modality is required.")]
         public string Modality { get; set; }
         [Required(ErrorMessage = "Event date is required.")]
-        public DateTime EventDate { get; set; }
+        public string EventDate { get; set; }
         [Required(ErrorMessage = "Total Tickets is required.")]
         public int TotalTickets { get; set; }
         [Required(ErrorMessage = "Event information is required.")]
