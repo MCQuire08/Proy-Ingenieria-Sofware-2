@@ -1,5 +1,6 @@
- 
-    function validarFormulario() {
+
+function validarFormulario() {
+    var view = new createUserController();
         // Obtener valores de los campos
         const nombre = document.getElementById('nombre').value;
         const apellidos = document.getElementById('apellidos').value;
@@ -7,7 +8,7 @@
         const numeroIdentificacion = document.getElementById('numeroIdentificacion').value;
         const email = document.getElementById('email').value;
         const telefono = document.getElementById('telefono').value;
-        const cedulaImagen = document.getElementById('cedulaImagen').value;
+        const cedulaImagen = view.GetImages();
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
         const ubicacion = document.getElementById('address').value;
@@ -53,14 +54,7 @@
             return false;
         }
 
-        const fileInput = document.getElementById('cedulaImagen');
-        const fileSize = fileInput.files[0].size / (1024 * 1024);
-        const fileExt = fileInput.value.split('.').pop().toLowerCase();
-        if (fileSize > 2 || (fileExt !== 'jpg' && fileExt !== 'png' && fileExt !== 'pdf')) {
-            mostrarError('Carga de imagen de cédula inválida. Tamaño máximo: 2MB y formatos permitidos: .jpg, .png, .pdf');
-            return false;
-        }
-
+      
         /*if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+,-./:;<=>?@[\\]^_`{|}~])(?!.*(1234|abcd)).{8,}/.test(password)) {
             mostrarError('La contraseña no cumple con los requisitos mínimos.');
             return false;
@@ -94,6 +88,9 @@
 
     function crearUsuario() {
         if (validarFormulario()) {
+            var view = new createUserController();
+            imagen = view.GetImages();
+           
             const user = {
                 Nombre: document.getElementById('nombre').value,
                 Apellidos: document.getElementById('apellidos').value,
@@ -101,7 +98,7 @@
                 NumeroIdentificacion: document.getElementById('numeroIdentificacion').value,
                 Email: document.getElementById('email').value,
                 Telefono: document.getElementById('telefono').value,
-                CedulaImagen: document.getElementById('cedulaImagen').value,
+                CedulaImagen: imagen.url,
                 Password: document.getElementById('password').value,
                 ConfirmPassword: document.getElementById('confirmPassword').value,
                 ubicacion: document.getElementById('address').value
@@ -147,7 +144,7 @@ function validacionOTPCorreo() {
     const apiUrl = `OTP/GenerateEmail?email=${encodeURIComponent(email)}`;
     var ctrlActions = new ControlActions();
     
-    ctrlActions.PostToAPI(apiUrl, "", function (otpValue) {
+    ctrlActions.PostToAPI(apiUrl, "", function (valueTrue,otpValue) {
 
         var otpValueString = otpValue.toString();
         Swal.fire({
@@ -232,3 +229,57 @@ $("#btn-siguiente").click(function () {
     
     validarFormulario();
 })
+
+$(document).ready(function () {
+    var view = new createUserController();
+    view.InitView();
+})
+
+function createUserController() {
+
+    this.InitView = function () {
+        var view = new createUserController();
+        view.LoadImages();
+    }
+    this.LoadImages = function () {
+        console.log('boton');
+        const container = $("#container-images-names");
+        const myWidget = cloudinary.createUploadWidget(
+            {
+                cloudName: 'eventwizz',
+                uploadPreset: 'ml_default'
+            },
+            (error, result) => {
+                if (!error && result && result.event === "success") {
+                    const badge1 = $("<span></span>")
+                        .addClass("badge rounded-pill bg-info")
+                        .text(result.info.original_filename)
+                        .attr("data-url", result.info.secure_url);
+
+                    container.append(badge1);
+                }
+            }
+        );
+
+        $('#btnLoadImages').on('click', function () {
+            myWidget.open();
+        });
+    }
+
+    this.GetImages = function () {
+        var spamObjects = [];
+
+        var spamElements = $("#container-images-names .badge");
+
+        spamElements.each(function () {
+            var spamObject = {
+                name: $(this).text(),
+                url: $(this).attr("data-url")
+            };
+
+            spamObjects.push(spamObject);
+        });
+
+        return spamObjects[0]; // Devolver el arreglo spamObjects
+    };
+}

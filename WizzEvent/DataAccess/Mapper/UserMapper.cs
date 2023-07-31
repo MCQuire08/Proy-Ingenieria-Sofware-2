@@ -79,7 +79,7 @@ namespace DataAccess.Mapper
             sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
             sqlOperation.AddVarcharParam("P_CONFIRM_PASSWORD", user.ConfirmPassword);
             sqlOperation.AddVarcharParam("P_UBICACION", user.Ubicacion);
-            sqlOperation.AddVarcharParam("P_ROL", "2");
+            sqlOperation.AddVarcharParam("P_ROL", "3");
 
 
             return sqlOperation;

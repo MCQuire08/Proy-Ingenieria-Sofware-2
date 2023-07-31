@@ -8,7 +8,7 @@
     <title>Registro de Usuarios - Información General</title>
     <link rel="stylesheet" type="text/css" href="~/css/CreateUserStyles.css">
     <script src="~/js/UbicationUser.js"></script>
-    <script src="~/js/CreateUser.js"></script>
+    <script src="~/js/Createuserge.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhFSvGQa0QBc0LcYRf88spbk3vxuSZHvw&callback=initMap" async defer></script>
 
 </head>
@@ -59,7 +59,9 @@
             <div class="form-row">
                 <div class="form-column">
                     <label for="cedulaImagen">Cargar Imagen de Cédula:</label>
-                    <input type="file" id="cedulaImagen" name="cedulaImagen" accept=".jpg, .png, .pdf">
+                    <div id="container-images-names">
+                    </div>
+                    <button class="btn btn-info" type="button" id="btnLoadImages">Subir</button>
                 </div>
                 <div class="form-column">
                     <label for="password">Contraseña:</label>
