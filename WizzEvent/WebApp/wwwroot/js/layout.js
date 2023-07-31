@@ -25,3 +25,11 @@ $(document).ready(function () {
     // Mostrar u ocultar otras opciones del nav según el rol de usuario
     mostrarOpcionesPorRol(rolUsuario);
 });
+function  CerrarSesion() {
+    // Limpia el localStorage eliminando el valor asociado a la clave "usuario"
+    localStorage.removeItem("idUsuario");
+    localStorage.removeItem("rolUsuario")
+
+    // Redirecciona al usuario al index
+    window.location.href = "index"; 
+}

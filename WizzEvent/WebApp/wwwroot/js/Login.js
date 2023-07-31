@@ -17,14 +17,35 @@ async function retrieveByEmail(email) {
     }
 }
 
+async function retrieveRolById(id) {
+    
+    const apiUrl = `https://localhost:7152/api/Role/RetrieveByID?id=${id}`;
+
+    try {
+        const response = await $.ajax({
+            url: apiUrl,
+            type: 'GET',
+            dataType: 'json'
+        });
+        return response;
+    } catch (error) {
+        console.error('Error retrieving data:', error);
+        return null;
+    }
+}
+
 
 async function login(email, password) {
     var user = await retrieveByEmail(email)
+    var rol = await retrieveRolById(user.id)
+
 
     if (user) {
         var contrasena = user.password;
         if (contrasena === password) {
             mostrarExito("Ingreso exitoso")
+            localStorage.setItem("rolUsuario", rol.rolName);
+            localStorage.setItem("idUsuario", user.id)
         }
         else {
             throw new Error('Datos incorrectos. Por favor verifique la informacion ingresada.');
@@ -43,7 +64,7 @@ async function validarLoginFormulario() {
 
     try {
         const user = await login(email, password);
-       
+        
         window.location.href = '/Index';
     } catch (error) {
         mostrarError(error.message);

@@ -59,10 +59,6 @@ namespace DataAccess.CRUD
             return lstCategories;
         }
 
-        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
-        {
-            throw new NotImplementedException();
-        }
 
         public override T RetrieveById<T>(BaseDTO dto)
         {

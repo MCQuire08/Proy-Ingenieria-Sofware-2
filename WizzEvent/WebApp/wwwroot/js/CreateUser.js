@@ -1,4 +1,4 @@
-
+ 
     function validarFormulario() {
         // Obtener valores de los campos
         const nombre = document.getElementById('nombre').value;
@@ -10,6 +10,8 @@
         const cedulaImagen = document.getElementById('cedulaImagen').value;
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
+        const ubicacion = document.getElementById('address').value;
+        
 
         if (!nombre || !apellidos || !tipoIdentificacion || !numeroIdentificacion || !email || !telefono || !cedulaImagen || !password || !confirmPassword) {
             mostrarError('Todos los campos son requeridos.');
@@ -43,6 +45,11 @@
 
         if (!/^[876]\d{3}-\d{4}$/.test(telefono)) {
             mostrarError('El teléfono ingresado no tiene el formato correcto.');
+            return false;
+        }
+
+        if (!ubicacion) {
+            mostrarError('La ubicacion es requerida.');
             return false;
         }
 
@@ -82,7 +89,8 @@
         });
 
         return true;
-    }
+}
+
 
     function crearUsuario() {
         if (validarFormulario()) {
@@ -96,7 +104,7 @@
                 CedulaImagen: document.getElementById('cedulaImagen').value,
                 Password: document.getElementById('password').value,
                 ConfirmPassword: document.getElementById('confirmPassword').value,
-                ubicacion:"9.934585953536649, -84.08192676606453"
+                ubicacion: document.getElementById('address').value
             };
 
             var ctrlActions = new ControlActions();

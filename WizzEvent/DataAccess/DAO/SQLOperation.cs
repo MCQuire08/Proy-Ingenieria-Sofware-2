@@ -39,9 +39,9 @@ namespace DataAccess.DAO
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
 
-        public void AddIntParam(string v, int id)
+        public void AddIntParam(string paramName, int paramValue)
         {
-            throw new NotImplementedException();
+            Parameters.Add(new SqlParameter(paramName, paramValue));
         }
     }
 }

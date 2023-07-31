@@ -16,6 +16,11 @@ namespace Core
             var mm = new UserCRUDFactory();
             mm.Create(user);
         }
+        public void CreateGE(User user)
+        {
+            var mm = new UserCRUDFactory();
+            mm.CreateGE(user);
+        }
 
         public void Update(User user)
         {

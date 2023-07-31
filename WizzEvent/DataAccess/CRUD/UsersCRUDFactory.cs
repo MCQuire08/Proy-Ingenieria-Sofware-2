@@ -25,9 +25,9 @@ namespace DataAccess.CRUD
             var sqlOperation = _mapper.GetCreateStatement(dto);
             _dao.ExecuteQueryProcedure(sqlOperation);
         }
-        public void CreateUserGE(BaseDTO dto)
+        public void CreateGE(BaseDTO dto)
         {
-            var sqlOperation = _mapper.GetCreateUserGEStatement(dto);
+            var sqlOperation = _mapper.GetCreateGEStatement(dto);
             _dao.ExecuteQueryProcedure(sqlOperation);
         }
 
@@ -88,12 +88,6 @@ namespace DataAccess.CRUD
             _dao.ExecuteProcedure(sqlOperation);
         }
 
-        public void UpdatePassword(string email, string password)
-        {
-            var sqlOperation = _mapper.GetUpdatePasswordStatement(email,password);
-            _dao.ExecuteProcedure(sqlOperation);
-        }
-
         public T RetrieveByEmailAndPassword<T>(BaseDTO dto)
         {
             var user = (User)dto;
@@ -142,6 +136,12 @@ namespace DataAccess.CRUD
             }
 
             return default(T);
+        }
+
+        public void UpdatePassword(string email, string password)
+        {
+            var sqlOperation = _mapper.GetUpdatePasswordStatement(email, password);
+            _dao.ExecuteProcedure(sqlOperation);
         }
     }
 }

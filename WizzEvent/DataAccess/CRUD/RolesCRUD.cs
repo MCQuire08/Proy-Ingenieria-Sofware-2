@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace DataAccess.CRUD
 {
-    public class LogsR : CrudFactory
+    public class RolesCRUD : CrudFactory
     {
 
-        LogsMapper _mapper;
+        RolesMapper _mapper;
 
-        public LogsR()
+        public RolesCRUD()
         {
             _dao = SqlDao.GetInstance();
-            _mapper = new LogsMapper();
+            _mapper = new RolesMapper();
         }
         public override void Create(BaseDTO dto)
         {
@@ -29,36 +29,16 @@ namespace DataAccess.CRUD
             throw new NotImplementedException();
         }
 
-       
-
         public override List<T> RetrieveAll<T>()
         {
-
-            var lstLogs = new List<T>();
-            var sqlOperation = _mapper.GetRetrieveAllStatement();
-
-            var lstResults = _dao.ExecuteQueryProcedure(sqlOperation);
-
-            if (lstResults.Count > 0)
-            {
-                var objs = _mapper.BuildObjects(lstResults);
-                foreach (var obj in objs)
-                {
-                    lstLogs.Add((T)Convert.ChangeType(obj, typeof(T)));
-                }
-            }
-
-            return lstLogs;
+            throw new NotImplementedException();
         }
-
-      
 
         public override T RetrieveById<T>(BaseDTO dto)
         {
-
-            var log = (Logs)dto;
-            var lstMemberships = new List<T>();
-            var sqlOperation = _mapper.GetRetrieveByIDStatement(log);
+            var role = (Roles)dto;
+            var lstUsers = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveByIDStatement(role);
 
             var result = _dao.ExecuteQueryProcedure(sqlOperation);
 
@@ -67,13 +47,13 @@ namespace DataAccess.CRUD
                 var objs = _mapper.BuildObjects(result);
                 foreach (var obj in objs)
                 {
-                    lstMemberships.Add((T)Convert.ChangeType(obj, typeof(T)));
+                    lstUsers.Add((T)Convert.ChangeType(obj, typeof(T)));
                 }
-
             }
-            if (lstMemberships.Count > 0)
+
+            if (lstUsers.Count > 0)
             {
-                return lstMemberships[0]; // Return the first element of lstMessages
+                return lstUsers[0];
             }
 
             return default(T);

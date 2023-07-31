@@ -62,6 +62,28 @@ namespace DataAccess.Mapper
 
             return sqlOperation;
         }
+        public SQLOperation GetCreateGEStatement(BaseDTO dto)
+        {
+            var sqlOperation = new SQLOperation();
+            sqlOperation.ProcedureName = "CRE_USER_GE_PR";
+
+            var user = (User)dto;
+
+            sqlOperation.AddVarcharParam("P_NOMBRE", user.Nombre);
+            sqlOperation.AddVarcharParam("P_APELLIDOS", user.Apellidos);
+            sqlOperation.AddVarcharParam("P_TIPO_IDENTIFICACION", user.TipoIdentificacion);
+            sqlOperation.AddVarcharParam("P_NUMERO_IDENTIFICACION", user.NumeroIdentificacion);
+            sqlOperation.AddVarcharParam("P_EMAIL", user.Email);
+            sqlOperation.AddVarcharParam("P_TELEFONO", user.Telefono);
+            sqlOperation.AddVarcharParam("P_CEDULA_IMAGEN", user.CedulaImagen);
+            sqlOperation.AddVarcharParam("P_PASSWORD", user.Password);
+            sqlOperation.AddVarcharParam("P_CONFIRM_PASSWORD", user.ConfirmPassword);
+            sqlOperation.AddVarcharParam("P_UBICACION", user.Ubicacion);
+            sqlOperation.AddVarcharParam("P_ROL", "2");
+
+
+            return sqlOperation;
+        }
 
         public SQLOperation GetCreateUserGEStatement(BaseDTO dto)
         {

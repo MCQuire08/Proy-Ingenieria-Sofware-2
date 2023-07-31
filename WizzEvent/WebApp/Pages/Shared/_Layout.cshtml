@@ -64,11 +64,12 @@
                     </ul>
                     <ul class="navbar-nav">
 
-                        <li class="nav-item">
-                            <a class="btn btn-danger m-2" asp-area="" asp-page="" id="btnSingOut">Cerrar Sesion</a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="btn btn-outline-warning" style="margin-top:7%" asp-page="/createuserge">Vuelvete un vendedor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-danger m-2" id="btnSingOut" asp-page="/index" onclick="CerrarSesion()">Cerrar Sesion</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-secondary m-2 btn-lg" asp-area="" asp-page="/loginuser" id="btnLogin">Iniciar Sesion</a>

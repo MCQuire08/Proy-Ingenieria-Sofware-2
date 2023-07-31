@@ -22,6 +22,8 @@
              if (status === 'OK') {
                  if (results[0]) {
                      var address = results[0].formatted_address;
+                     document.getElementById('address').value = address;
+                     document.getElementById('address').placeholder = 'Dirección: ' + address;
                      document.getElementById('address').innerHTML = 'Dirección: ' + address;
                  }
              } else {

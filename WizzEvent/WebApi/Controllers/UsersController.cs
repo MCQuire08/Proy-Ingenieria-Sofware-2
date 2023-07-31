@@ -26,6 +26,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("CreateGE")]
+        public async Task<IActionResult> CreateGE(User user)
+        {
+            try
+            {
+                var userManager = new UserManager();
+                userManager.CreateGE(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete]
         [Route("Delete")]
         public async Task<IActionResult> Delete(User user)

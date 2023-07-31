@@ -6,9 +6,10 @@
 <head>
     <title>Registro de Usuarios - Información General</title>
     <link rel="stylesheet" type="text/css" href="~/css/CreateUserStyles.css">
+    <script src="~/js/UbicationUser.js"></script>
     <script src="~/js/CreateUser.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhFSvGQa0QBc0LcYRf88spbk3vxuSZHvw&callback=initMap" async defer></script>
-    <script src="~/js/UbicationUser.js"></script>
+    
 </head>
 <body>
     <div class="form">
@@ -71,6 +72,7 @@
 
             <div class="content">
                 <div id="map" style="height: 400px;"></div>
+                <input class="form-control" id="address" type="text"  readonly="" >
             </div>
             
             <button type="button" class="next-button" id="btn-siguiente" onclick="validarFormulario()">Registrarse</button>

@@ -102,9 +102,6 @@ namespace DataAccess.CRUD
             return generatedOTP == enteredOTP;
         }
 
-        public override T RetrieveByEmailAndPassword<T>(BaseDTO dto)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
