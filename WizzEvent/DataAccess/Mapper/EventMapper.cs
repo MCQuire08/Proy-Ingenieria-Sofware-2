@@ -23,7 +23,7 @@ namespace DataAccess.Mapper
                 Slogan = row["Slogan"] != DBNull.Value ? (string)row["Slogan"] : string.Empty,
                 Description = row["Description"] != DBNull.Value ? (string)row["Description"] : string.Empty,
                 Modality = row["Modality"] != DBNull.Value ? (string)row["Modality"] : string.Empty,
-                EventDate = row["EventDate"] != DBNull.Value ? (DateTime)row["EventDate"] : DateTime.MinValue,
+                //EventDate = row["EventDate"] != DBNull.Value ? (string)row["EventDate"] : string.MinValue,
                 TotalTickets = row["TotalTickets"] != DBNull.Value ? (int)row["TotalTickets"] : 0,
                 Information = row["Information"] != DBNull.Value ? (string)row["Information"] : string.Empty,
                 PaymentMethod = row["PaymentMethod"] != DBNull.Value ? (string)row["PaymentMethod"] : string.Empty,
@@ -201,13 +201,11 @@ namespace DataAccess.Mapper
 
             var eevent = (Event)dto;
 
-            string eventDateAsString = eevent.EventDate.ToString("yyyy-MM-dd HH:mm:ss");
-
             sqlOperation.AddVarcharParam("P_NAME", eevent.Name);
             sqlOperation.AddVarcharParam("P_SLOGAN", eevent.Slogan);
             sqlOperation.AddVarcharParam("P_DESCRIPTION", eevent.Description);
             sqlOperation.AddVarcharParam("P_MODALITY", eevent.Modality);
-            sqlOperation.AddVarcharParam("P_EVENTDATE", eventDateAsString);
+            sqlOperation.AddVarcharParam("P_EVENTDATE", eevent.EventDate.ToString());
             sqlOperation.AddIntParam("P_TOTALTICKETS", eevent.TotalTickets);
             sqlOperation.AddVarcharParam("P_INFORMATION", eevent.Information);
             sqlOperation.AddVarcharParam("P_PAYMENTMETHOD", eevent.PaymentMethod);
@@ -240,7 +238,17 @@ namespace DataAccess.Mapper
 
         public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SQLOperation();
+            sqlOperation.ProcedureName = "RET_ID_EVENTS_PR";
+
+            var eevent = (Event)dto;
+
+            sqlOperation.AddVarcharParam("@P_NAME",eevent.Name);
+            sqlOperation.AddVarcharParam("@P_SLOGAN", eevent.Slogan);
+            sqlOperation.AddVarcharParam("@P_DESCRIPTION", eevent.Description);
+            sqlOperation.AddVarcharParam("@P_INFORMATION", eevent.Information);
+
+            return sqlOperation;
         }
 
         public SQLOperation GetUpdateStatement(BaseDTO dto)
@@ -250,14 +258,13 @@ namespace DataAccess.Mapper
 
             var eevent = (Event)dto;
 
-            string eventDateAsString = eevent.EventDate.ToString("yyyy-MM-dd HH:mm:ss");
 
             sqlOperation.AddIntParam("P_IDEVENT", eevent.Id); 
             sqlOperation.AddVarcharParam("P_NAME", eevent.Name);
             sqlOperation.AddVarcharParam("P_SLOGAN", eevent.Slogan);
             sqlOperation.AddVarcharParam("P_DESCRIPTION", eevent.Description);
             sqlOperation.AddVarcharParam("P_MODALITY", eevent.Modality);
-            sqlOperation.AddVarcharParam("P_EVENTDATE", eventDateAsString);
+            //sqlOperation.AddVarcharParam("P_EVENTDATE", eventDateAsString);
             sqlOperation.AddIntParam("P_TOTALTICKETS", eevent.TotalTickets);
             sqlOperation.AddVarcharParam("P_INFORMATION", eevent.Information);
             sqlOperation.AddVarcharParam("P_PAYMENTMETHOD", eevent.PaymentMethod);

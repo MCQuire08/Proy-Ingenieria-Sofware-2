@@ -43,6 +43,23 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("RetrieveByIdEvent")]
+        public async Task<IActionResult> RetrieveByIdEvent(Event eevent)
+        {
+            try
+            {
+                var mm = new EventManager();
+                var results = mm.RetrieveByIdEvent(eevent);
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut]
         [Route("UpdateEvent")]
         public async Task<IActionResult> UpdateEvent(Event eevent)

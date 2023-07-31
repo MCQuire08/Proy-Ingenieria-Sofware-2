@@ -97,7 +97,7 @@ function ControlActions() {
 						'Transaction completed!',
 						'success'
 					)
-					callBackFunction(data);
+					callBackFunction(true,data);
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
