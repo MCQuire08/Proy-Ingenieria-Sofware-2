@@ -486,6 +486,11 @@ namespace DataAccess.Mapper
 
             return sqlOperation;
         }
+
+        public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #endregion

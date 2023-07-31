@@ -1,4 +1,3 @@
-﻿
 function ControlActions() {
 
 	this.URL_API = "https://localhost:7152/api/";
@@ -103,21 +102,21 @@ function ControlActions() {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 
-				var responseJson = jqXHR.responseJSON;				
+				var responseJson = jqXHR.responseJSON;
 				var message = jqXHR.responseText;
 
-				if (responseJson) {					
+				if (responseJson) {
 					var errors = responseJson.errors;
 					var errorMessages = Object.values(errors).flat();
-					message = errorMessages.join("<br/> ");					
+					message = errorMessages.join("<br/> ");
 				}
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops...',
-					html:  message,
+					html: message,
 					footer: 'CenfoChat Client'
 				})
-			}							
+			}
 		});
 	};
 

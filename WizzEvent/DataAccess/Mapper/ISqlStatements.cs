@@ -21,5 +21,6 @@ namespace DataAccess.Mapper
         SQLOperation GetRetrieveAllStatement();
 
         SQLOperation GetRetrieveByIDStatement(BaseDTO dto);
+      
     }
 }

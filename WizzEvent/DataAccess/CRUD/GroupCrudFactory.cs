@@ -58,6 +58,8 @@ namespace DataAccess.CRUD
             return lstGroups;
         }
 
+      
+
         public override T RetrieveById<T>(BaseDTO dto)
         {
             throw new NotImplementedException();
