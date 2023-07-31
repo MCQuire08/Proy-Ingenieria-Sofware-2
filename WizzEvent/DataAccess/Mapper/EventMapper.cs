@@ -23,7 +23,7 @@ namespace DataAccess.Mapper
                 Slogan = row["Slogan"] != DBNull.Value ? (string)row["Slogan"] : string.Empty,
                 Description = row["Description"] != DBNull.Value ? (string)row["Description"] : string.Empty,
                 Modality = row["Modality"] != DBNull.Value ? (string)row["Modality"] : string.Empty,
-                //EventDate = row["EventDate"] != DBNull.Value ? (string)row["EventDate"] : string.MinValue,
+                EventDate = row["EventDate"] != DBNull.Value ? (string)row["EventDate"] : string.Empty,
                 TotalTickets = row["TotalTickets"] != DBNull.Value ? (int)row["TotalTickets"] : 0,
                 Information = row["Information"] != DBNull.Value ? (string)row["Information"] : string.Empty,
                 PaymentMethod = row["PaymentMethod"] != DBNull.Value ? (string)row["PaymentMethod"] : string.Empty,

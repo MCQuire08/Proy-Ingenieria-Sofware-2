@@ -42,3 +42,33 @@
     margin-top: 10px;
 }
 
+/*Modal Info*/
+
+/* En tu archivo homepage.css o donde tengas tus estilos */
+.modal-dialog {
+    max-width: 680px; 
+}
+
+
+.modal-header span{
+    margin-left:10px;
+}
+
+#imageModal {
+    max-width: 100%;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+
+#Slogan{
+    font-size:26px;
+}
+
+/* En tu archivo homepage.css o donde tengas tus estilos */
+.contacts {
+    column-count: 2;
+}
+
+.modal-footer{
+    justify-content:center
+}

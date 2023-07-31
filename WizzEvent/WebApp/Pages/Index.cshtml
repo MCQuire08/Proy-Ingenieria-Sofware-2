@@ -5,9 +5,38 @@
 }
 <link href="~/css/homepage.css" rel="stylesheet" />
 <script src="~/js/pages/homepage.js"></script>
-<div style="background-color: #f0f0f0; padding: 10px; text-align: center;">
-    <img src="~/imgs/banner-eventos.jpg" alt="Banner de ejemplo" style="max-width: 100%;">
+<div style="width:100%">
+    <img src="~/imgs/bannereventwizz.png" alt="Banner de ejemplo" style="max-width: 100%;">
 </div>
-
+<div class="modal" id="modalInfo">
+    <div class="modal-dialog" id="modalInfo" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleEvent"></h5>
+                <span class="badge bg-secondary" id="category"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="imageModal" src="">
+                <small class="text-body-secondary" id="Slogan"></small>
+                <p id="Description"></p>
+                <p id="Modality"></p>
+                <p id="Fecha"></p>
+                <p id="Information"></p>
+                <p id="Payment"></p>
+                <p>Contactos:</p>
+                <div id="container-contacts">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">Comprar Entrada</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-cards">
 </div>
+
+               

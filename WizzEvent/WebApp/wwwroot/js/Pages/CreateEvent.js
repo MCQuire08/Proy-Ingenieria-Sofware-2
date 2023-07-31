@@ -84,7 +84,6 @@
 
         const eventId = await view.GetIdEvent(response1);
 
-        // Utilizamos Promise.all para esperar a que todas las operaciones asincrónicas se completen
         const [checkContacts, checkImages, checkCategory] = await Promise.all([
             view.CreateContacts(eventId),
             view.CreateImages(eventId),
