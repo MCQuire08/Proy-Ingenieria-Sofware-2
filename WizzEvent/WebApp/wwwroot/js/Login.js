@@ -43,7 +43,7 @@ async function login(email, password) {
     if (user) {
         var contrasena = user.password;
         if (contrasena === password) {
-            mostrarExito("Ingreso exitoso")
+            setTimeout(mostrarExito("Ingreso exitoso"), 3000);
             localStorage.setItem("rolUsuario", rol.rolName);
             localStorage.setItem("idUsuario", user.id)
         }
@@ -85,7 +85,7 @@ function mostrarExito(mensaje) {
     Swal.fire({
         icon: 'success',
         title: 'Buen trabajo',
-        text: mensaje,
+        text: mensaje
     });
 }
 

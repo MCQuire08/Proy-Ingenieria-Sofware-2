@@ -79,21 +79,20 @@ function AdminEventsController() {
         var ctrlActions = new ControlActions();
         var self = this;
 
-        var urlService = ctrlActions.GetUrlApiService(this.ApiService + "/RetrieveAll");
+        var urlService = ctrlActions.GetUrlApiService("Event/RetrieveAllEvents");
+
         var columns = [];
-
         columns[0] = { 'data': 'name' };
-        columns[1] = {
-            'data': null,
-            'render': function (data, type, row) {
-                return row.ticketsToSellMin + '-' + row.ticketsToSellMax;
-            }
-        };
-
-        columns[2] = { 'data': 'commission' };
-        columns[3] = { 'data': 'price' };
-
-        columns[4] = {
+        columns[1] = { 'data': 'slogan' };
+        columns[2] = { 'data': 'description' };
+        columns[3] = { 'data': 'modality' };
+        columns[4] = { 'data': 'eventDate' };
+        columns[5] = { 'data': 'totalTickets' };
+        columns[6] = { 'data': 'information' };
+        columns[7] = { 'data': 'paymentMethod' };
+        columns[8] = { 'data': 'freeTickets' };
+        columns[9] = { 'data': 'state' };
+        columns[10] = {
             'data': null,
             'render': function (data, type, row) {
                 return '<button class="btn btn-primary btn-sm btn-edit" data-id="' + row.id + '"><i class="fa-regular fa-pen-to-square"></i></button>' + "   " +
@@ -103,12 +102,11 @@ function AdminEventsController() {
 
 
         var table = $("#tblEvent").DataTable();
-
         if (table) {
-            table.clear().destroy(); // Si la tabla existe, la limpiamos y destruimos
+            table.clear().destroy();
         }
 
-        var table = $("#tblEvent").DataTable({
+        table = $("#tblEvent").DataTable({
             "ajax": {
                 "url": urlService,
                 "dataSrc": ""
@@ -166,18 +164,16 @@ function AdminEventsController() {
                         self.delete(id);
                         Swal.fire(
                             'Borrado',
-                            'El evento ha sido borrada',
+                            'El evento ha sido borrado',
                             'success'
                         ).then(() => {
-                            table.ajax.reload(null, false); // Refresh the table after successful deletion
+                            table.ajax.reload(null, false);
                         });
                     }
                 });
             }
         });
     };
-
-
 
     function showEditWindow(membership) {
         var form = $('<form>');
@@ -220,8 +216,6 @@ function AdminEventsController() {
             self.Update(membership);
         });
     }
-
-
 
     function showModal(title, content, onSave) {
         var modal = $('<div class="modal fade" tabindex="-1" role="dialog">');

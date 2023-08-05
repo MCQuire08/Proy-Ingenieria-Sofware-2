@@ -28,7 +28,7 @@ function recoveryController() {
             },
             error: function (xhr, status, error) {
               
-                console.error('Error actualizando la contrasenha:', error);
+                console.error('Error actualizando la contrasena:', error);
             }
         });
     }
@@ -129,7 +129,12 @@ function validateCorreo() {
     var email = $("#email").val();
 
     if (!validationModule.validateEmail(email)) {
-        sweetAlertModule.showErrorAlert('Error', 'Ingresa un correo electronico válido.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ingresa un correo electronico valido!',
+        })
+
         return;
     }
     var view = new recoveryController();

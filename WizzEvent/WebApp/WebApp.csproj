@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Pagess\" />
-    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

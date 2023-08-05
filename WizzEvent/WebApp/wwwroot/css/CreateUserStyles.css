@@ -1,53 +1,26 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.timeline {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.step {
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    color: #333;
-}
-
-    .step.active {
-        background-color: #007bff;
-        color: #fff;
-    }
-
 .form-container {
-    max-width: 800px;
-    margin: 30px auto;
+    max-width: 100%;
+    margin: 70px auto;
+    background-color: #6e41bf;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    height:650px;
+    margin-bottom:20%;
+}
+
+h2 {
+    margin-bottom: 30px;
 }
 
 .form-row {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .form-column {
     flex: 1;
-    margin-right: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
+    padding: 0 25px;
 }
 
 input[type="text"],
@@ -56,26 +29,24 @@ input[type="password"],
 select {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    margin-bottom: 10px;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-input[type="file"] {
-    display: block;
-    margin-top: 5px;
-}
-
-button.next-button {
-    background-color: #007bff;
+.next-button,
+.back-button {
+    padding: 10px 20px;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    float: right;
 }
 
-    button.next-button:hover {
-        background-color: #0056b3;
+.step {
+    display: none;
+}
+
+    .step.active {
+        display: block;
     }
