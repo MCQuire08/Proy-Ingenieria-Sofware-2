@@ -22,7 +22,7 @@ function recoveryController() {
             type: 'PUT',
             success: function (data) {
               
-                sweetAlertModule.showSuccessAlert('Cambio de Contraseña Exitoso', 'Tu contraseña ha sido cambiada exitosamente.');
+                sweetAlertModule.showSuccessAlert('Cambio de Contrasena Exitoso', 'Tu contrasena ha sido cambiada exitosamente.');
                 
                 window.location.href = 'LoginUser';
             },
@@ -99,7 +99,7 @@ var sweetAlertModule = (function () {
 
     function showNewPasswordInput(onConfirm) {
         Swal.fire({
-            title: 'Solicitar nueva contraseña',
+            title: 'Solicitar nueva contrasena',
             input: 'password',
             inputAttributes: {
                 autocapitalize: 'off'
@@ -147,7 +147,7 @@ function x(user) {
         const apiUrl = `OTP/GenerateEmail?email=${encodeURIComponent(user.email)}`;
         var ctrlActions = new ControlActions();
       
-        ctrlActions.PostToAPI(apiUrl, user.email, function (otpValue) {
+        ctrlActions.PostToAPI(apiUrl, user.email, function (valor,otpValue) {
             var otpValueString = otpValue.toString();
             sweetAlertModule.showOTPInput(function (otp) {
                 if (otp === otpValueString) {

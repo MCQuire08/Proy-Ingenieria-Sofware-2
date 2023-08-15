@@ -33,7 +33,8 @@ function AdminLogsController() {
 
 
         var table = $("#tblLogs").DataTable();
-
+        
+        
         if (table) {
             table.clear().destroy(); // Si la tabla existe, la limpiamos y destruimos
         }
@@ -44,8 +45,9 @@ function AdminLogsController() {
                 "dataSrc": ""
             },
             "columns": columns
+           
         });
-
+         
     }
 
 }
