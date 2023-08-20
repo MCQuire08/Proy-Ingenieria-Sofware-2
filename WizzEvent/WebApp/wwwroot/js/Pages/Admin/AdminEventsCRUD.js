@@ -11,7 +11,6 @@ function AdminEventsController() {
 
 
     this.InitView = function () {
-
         this.LoadTable();
     }
 

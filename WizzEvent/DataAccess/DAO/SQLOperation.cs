@@ -47,5 +47,10 @@ namespace DataAccess.DAO
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
 
+        public void AddDecimalParam(string paramName, decimal paramValue)
+        {
+            Parameters.Add(new SqlParameter(paramName, paramValue));
+        }
+
     }
 }

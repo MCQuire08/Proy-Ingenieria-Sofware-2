@@ -31,12 +31,50 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Comprar Entrada</button>
+                <button type="button" id="btnBuyTicket" class="btn btn-secondary">Comprar Entrada</button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal" id="modalAddCart">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Evento de Bad Bunny</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body-tickets">
+                <table class="tbl-buyTickets">
+                    <tbody id="ticketTableBody">
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnAddCartItems" class="btn btn-secondary">Añadir al carrito</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-cards">
 </div>
 
-               
+<script>
+    $(document).ready(function () {
+        $('#btnBuyTicket').on('click', function () {
+            $('#modalAddCart').modal('show');
+        });
+
+        $('#modalAddCart').on('show.bs.modal', function () {
+            $('#modalInfo').modal('hide');
+        });
+
+        $('#modalAddCart').on('hidden.bs.modal', function () {
+            $('#modalInfo').modal('show');
+        });
+    });
+</script>

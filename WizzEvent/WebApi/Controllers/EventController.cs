@@ -255,58 +255,6 @@ namespace WebApi.Controllers
         }
         #endregion
 
-        #region"Type of Ticket"
-        [HttpPost]
-        [Route("CreateTicketTypeToEvent")]
-        public async Task<IActionResult> CreateTicketTypeToEvent(TicketType ticketType)
-        {
-            try
-            {
-                var um = new EventManager();
-                um.CreateTicketTypeToEvent(ticketType);
-
-                return Ok(ticketType);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("RetrieveAllTicketTypeToEvent")]
-        public async Task<IActionResult> RetrieveAllTicketTypeToEvent(int idEvent)
-        {
-            try
-            {
-                var mm = new EventManager();
-                var results = mm.RetrieveAllTicketTypeToEvent(idEvent);
-
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("DeleteTicketTypeToEvent")]
-        public async Task<IActionResult> DeleteTicketTypeToEvent(TicketType ticketType)
-        {
-            try
-            {
-                var um = new EventManager();
-                um.DeleteTicketTypeToEvent(ticketType);
-
-                return Ok(ticketType);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        #endregion
 
         #region"Group"
         [HttpPost]

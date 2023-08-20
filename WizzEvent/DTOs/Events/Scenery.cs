@@ -9,6 +9,7 @@ namespace DTOs.Events
 {
     public class Scenery : BaseDTO
     {
+        public int IdEvent { get; set; }
         [Required(ErrorMessage = "Scenery name is required.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Scenery location is required.")]

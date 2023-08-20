@@ -87,26 +87,6 @@ namespace Core
 
         #endregion
 
-        #region"Type of Ticket"
-        public void CreateTicketTypeToEvent(TicketType ticketType)
-        {
-            var crud = new EventCrudFactory();
-            crud.CreateTicketTypeToEvent(ticketType);
-        }
-
-        public void DeleteTicketTypeToEvent(TicketType ticketType)
-        {
-            var crud = new EventCrudFactory();
-            crud.DeleteTicketTypeToEvent(ticketType);
-        }
-
-        public List<TicketType> RetrieveAllTicketTypeToEvent(int idEvent)
-        {
-            var crud = new EventCrudFactory();
-            return crud.RetrieveAllTicketTypeToEvent<TicketType>(idEvent);
-        }
-        #endregion
-
         #region"Images"
         public void AddImageToEvent(Image image)
         {

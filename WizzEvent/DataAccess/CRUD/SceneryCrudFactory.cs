@@ -60,9 +60,28 @@ namespace DataAccess.CRUD
             return lstSceneries;
         }
 
-        public override T RetrieveById<T>(BaseDTO dto)
+        public T RetrieveByIdScenery<T>(int idEvent)
         {
-            throw new NotImplementedException();
+            var lstSceneries = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveByIDStatement(idEvent);
+
+            var result = _dao.ExecuteQueryProcedure(sqlOperation); ;
+
+            if (result.Count > 0)
+            {
+                var objs = _mapper.BuildObjects(result);
+                foreach (var obj in objs)
+                {
+                    lstSceneries.Add((T)Convert.ChangeType(obj, typeof(T)));
+                }
+            }
+
+            if (result.Count > 0)
+            {
+                return lstSceneries[0];
+            }
+
+            return default(T);
         }
 
         public override void Update(BaseDTO dto)
@@ -111,12 +130,36 @@ namespace DataAccess.CRUD
 
             _dao.ExecuteProcedure(sqlOperation);
         }
+
+        public T RetrieveByIdSector<T>(int idEvent, string sector)
+        {
+            var lstSector = new List<T>();
+            var sqlOperation = _mapper.GetRetrieveByIDSectorStatement(idEvent,sector);
+
+            var result = _dao.ExecuteQueryProcedure(sqlOperation);
+
+            if (result.Count > 0)
+            {
+                var objs = _mapper.BuildObjectsSector(result);
+                foreach (var obj in objs)
+                {
+                    lstSector.Add((T)Convert.ChangeType(obj, typeof(T)));
+                }
+            }
+
+            if (result.Count > 0)
+            {
+                return lstSector[0];
+            }
+
+            return default(T);
+        }
         #endregion
 
         #region"Seat"
-        public void CreateSeat(Seat seat)
+        public void CreateSeat(Seat seat, int totalSeats)
         {
-            var sqlOperation = _mapper.GetCreateSeatStatement(seat);
+            var sqlOperation = _mapper.GetCreateSeatStatement(seat,totalSeats);
 
             _dao.ExecuteProcedure(sqlOperation);
         }
@@ -149,7 +192,14 @@ namespace DataAccess.CRUD
             return lstSeats;
         }
 
-       
+        public override T RetrieveById<T>(BaseDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
         #endregion
     }
 }

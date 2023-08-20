@@ -87,7 +87,8 @@
         const [checkContacts, checkImages, checkCategory] = await Promise.all([
             view.CreateContacts(eventId),
             view.CreateImages(eventId),
-            view.CreateCategory(eventId)
+            view.CreateCategory(eventId),
+            view.CreateScenery(eventId)
         ]);
 
         checks.checkContact = checkContacts;
@@ -129,8 +130,6 @@
         }
     };
 
-
-
     this.CreateCategory = async function (idEvent) {
         var view = new CreateEventController();
         const apiUrl = 'https://localhost:7152/api/Event/AddCategoryToEvent?idCategory=' + view.GetCategory() + '&idEvent=' + idEvent;
@@ -151,7 +150,6 @@
             });
         });
     };
-
 
     this.CreateImages = async function (idEvent) {
         var view = new CreateEventController();
@@ -225,7 +223,7 @@
                         resolve(true);
                     },
                     error: function (error) {
-                        console.error('Error al crear el contacto:', error);
+                        console.log('Error al crear el contacto:', error);
                         resolve(false);
                     }
                 });
@@ -244,6 +242,115 @@
                 return false; 
             });
     };
+
+    this.CreateScenery = async function (idEvent) {
+        var view = new CreateEventController();
+        const selectElement = $('#sltScenery');
+        const selectScenery = selectElement.val();
+        const SceneryLocation = selectElement.find('option:selected').data('location');
+        const apiUrl = 'https://localhost:7152/api/Scenery/CreateScenery';
+        const apiUrlGetIdScenery = 'https://localhost:7152/api/Scenery/RetrieveByIdScenery?IdEvent=';
+
+        const Scenery = {
+            idEvent: idEvent,
+            name: selectScenery,
+            location: SceneryLocation
+        };
+
+        $.ajax({
+            url: apiUrl,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(Scenery),
+            success: function (response) {
+                $.ajax({
+                    url: apiUrlGetIdScenery + Scenery.idEvent,
+                    type: 'POST',
+                    success: function (response) {
+                        console.log('Llamada exitosa para:', response);
+                        view.CreateSectorAndSeats(response.id);
+                    },
+                    error: function (error) {
+                        console.log('API error:', error);
+                    }
+                });
+
+            },
+            error: function (error) {
+                console.error('API error:', error);
+            }
+        });
+    }
+
+    this.CreateSectorAndSeats = function (IdScenery) {
+        var view = new CreateEventController();
+        const urlCreateSector = 'https://localhost:7152/api/Scenery/CreateSectorToScenery';
+        const urlGetSectorId = 'https://localhost:7152/api/Scenery/RetrieveByIdSector?';
+        const urlCreateSeats = 'https://localhost:7152/api/Scenery/CreateSeatToSector?totalSeats=';
+
+        var idScenery = 'IdScenery=' + IdScenery;
+
+        var entries = [];
+
+        $("#table-type-tickets tr:not(:first)").each(function () {
+            var type = $(this).find("td:eq(0)").text();
+            var amount = parseInt($(this).find("input[type=number]").eq(0).val());
+            var price = parseFloat($(this).find("input[type=number]").eq(1).val());
+
+            entries.push({
+                idScenery: IdScenery,
+                name: type,
+                price: price,
+                state: 'Creado',
+                seatsNumber: amount
+            });
+        });
+
+        entries.forEach(function (entry) {
+            $.ajax({
+                url: urlCreateSector,
+                type: 'POST',
+                data: JSON.stringify(entry),
+                contentType: 'application/json',
+                success: function (response) {
+                    $.ajax({
+                        url: urlGetSectorId + idScenery + '&Sector=' + entry.name,
+                        type: 'POST',
+                        success: function (response) {
+                            console.log('Llamada exitosa para:', response);
+                            var seats = {
+                                idScenery: IdScenery,
+                                idSector: response.id,
+                                name: entry.name.substring(0, 3).toUpperCase(),
+                                state: 'Creado'
+                            };
+
+                            $.ajax({
+                                url: urlCreateSeats + entry.seatsNumber,
+                                type: 'POST',
+                                data: JSON.stringify(seats),
+                                contentType: 'application/json',
+                                success: function (response) {
+                                    console.log('Llamada exitosa para:', response);
+                                },
+                                error: function (error) {
+                                    console.error('Error en la llamada para:', seats);
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            console.log('API error:', error);
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.error('Error en la llamada para:', entry);
+                }
+            });
+        });
+    }
+
+
 
     this.GetCategory = function () {
         const selectElement = $('#stlCategory');
@@ -378,7 +485,7 @@
             spamObjects.push(spamObject);
         });
 
-        return spamObjects; // Devolver el arreglo spamObjects
+        return spamObjects;
     };
 
 }

@@ -18,6 +18,7 @@ namespace DataAccess.Mapper
             var sceneryDTO = new Scenery
             {
                 Id = (int)row["IdScenery"],
+                IdEvent = (int)row["IdEvent"],
                 Name = row["Name"] != DBNull.Value ? (string)row["Name"] : string.Empty,
                 Location = row["Location"] != DBNull.Value ? (string)row["Location"] : string.Empty
             };
@@ -45,6 +46,7 @@ namespace DataAccess.Mapper
                 Id = (int)row["IdSector"],
                 IdScenery = (int)row["IdScenery"],
                 Name = row["Name"] != DBNull.Value ? (string)row["Name"] : string.Empty,
+                Price = (decimal)row["Price"],
                 State = row["State"] != DBNull.Value ? (string)row["State"] : string.Empty,
                 SeatsNumber = row["SeatsNumber"] != DBNull.Value ? (int)row["SeatsNumber"] : 0
             };
@@ -100,6 +102,7 @@ namespace DataAccess.Mapper
 
             var scenery = (Scenery)dto;
 
+            sqlOperation.AddIntParam("P_IDEVENT", scenery.IdEvent);
             sqlOperation.AddVarcharParam("P_NAME", scenery.Name);
             sqlOperation.AddVarcharParam("P_LOCATION", scenery.Location);
 
@@ -126,9 +129,14 @@ namespace DataAccess.Mapper
             return sqlOperation;
         }
 
-        public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)
+        public SQLOperation GetRetrieveByIDStatement(int IdEvent)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SQLOperation();
+
+            sqlOperation.ProcedureName = "RET_BY_ID_SCENERY_PR";
+            sqlOperation.AddIntParam("P_IDEVENT",IdEvent);
+
+            return sqlOperation;
         }
 
         public SQLOperation GetUpdateStatement(BaseDTO dto)
@@ -153,6 +161,7 @@ namespace DataAccess.Mapper
             sqlOperation.AddIntParam("P_IDSCENERY", idScenery);
             sqlOperation.AddVarcharParam("P_NAME", sector.Name);
             sqlOperation.AddVarcharParam("P_STATE", sector.State);
+            sqlOperation.AddDecimalParam("P_PRICE", sector.Price);
             sqlOperation.AddIntParam("P_SEATSNUMBER", sector.SeatsNumber);
 
             return sqlOperation;
@@ -179,13 +188,14 @@ namespace DataAccess.Mapper
             return sqlOperation;
         }
 
-        public SQLOperation GetCreateSeatStatement(Seat seat)
+        public SQLOperation GetCreateSeatStatement(Seat seat, int totalSeats)
         {
             var sqlOperation = new SQLOperation();
             sqlOperation.ProcedureName = "CRE_SECTOR_SEAT_PR";
 
             sqlOperation.AddIntParam("P_IDSCENERY", seat.IdScenery);
             sqlOperation.AddIntParam("P_IDSECTOR", seat.IdSector);
+            sqlOperation.AddIntParam("P_NUM_SEATS", totalSeats);
             sqlOperation.AddVarcharParam("P_STATE", seat.State);
             sqlOperation.AddVarcharParam("P_NAME", seat.Name);
 
@@ -215,9 +225,21 @@ namespace DataAccess.Mapper
             return sqlOperation;
         }
 
-        public SQLOperation GetRetrieveByEmailAndPassword(BaseDTO dto)
+        public SQLOperation GetRetrieveByIDStatement(BaseDTO dto)
         {
             throw new NotImplementedException();
+        }
+
+        public SQLOperation GetRetrieveByIDSectorStatement(int idEvent, string sector)
+        {
+            var sqlOperation = new SQLOperation();
+
+            sqlOperation.ProcedureName = "RET_BY_ID_SCENERY_SECTOR_PR";
+
+            sqlOperation.AddIntParam("P_IDSCENERY", idEvent);
+            sqlOperation.AddVarcharParam("P_NAME", sector);
+
+            return sqlOperation;
         }
     }
 }

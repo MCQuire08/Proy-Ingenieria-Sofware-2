@@ -36,6 +36,12 @@ namespace Core
             var crud = new SceneryCrudFactory(); 
             return crud.RetrieveAll<Scenery>();
         }
+
+        public Scenery RetrieveByIdScenery(int idEvent)
+        {
+            var crud = new SceneryCrudFactory();
+            return crud.RetrieveByIdScenery<Scenery>(idEvent);
+        }
         #endregion
 
         #region"Sector"
@@ -56,13 +62,20 @@ namespace Core
             var crud = new SceneryCrudFactory();
             return crud.RetrieveAllSector<Sector>(idScenery);
         }
+
+        public object RetrieveByIdSector(int idEvent, string sector)
+        {
+            var crud = new SceneryCrudFactory();
+            return crud.RetrieveByIdSector<Sector>(idEvent,sector);
+        }
+
         #endregion
 
         #region"Seat"
-        public void CreateSeat(Seat seat)
+        public void CreateSeat(Seat seat, int totalSeats)
         {
             var crud = new SceneryCrudFactory();
-            crud.CreateSeat(seat);
+            crud.CreateSeat(seat,totalSeats);
         }
 
         public void DeleteSeat(Seat seat)
@@ -76,6 +89,9 @@ namespace Core
             var crud = new SceneryCrudFactory();
             return crud.RetrieveAllSeatsOfSector<Seat>(idScenery,idSector);
         }
+
+
+
         #endregion
     }
 }

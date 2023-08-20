@@ -41,6 +41,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("RetrieveByIdScenery")]
+        public async Task<IActionResult> RetrieveByIdScenery(int IdEvent)
+        {
+            try
+            {
+                var mm = new SceneryManager();
+                var results = mm.RetrieveByIdScenery(IdEvent);
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut]
         [Route("UpdateScenery")]
         public async Task<IActionResult> UpdateScenery(Scenery scenery)
@@ -107,6 +123,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("RetrieveByIdSector")]
+        public async Task<IActionResult> RetrieveByIdSector(int IdScenery, string Sector)
+        {
+            try
+            {
+                var mm = new SceneryManager();
+                var results = mm.RetrieveByIdSector(IdScenery, Sector);
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete]
         [Route("DeleteSectorToScenery")]
         public async Task<IActionResult> DeleteSectorToScenery(Sector sector)
@@ -128,12 +160,12 @@ namespace WebApi.Controllers
         #region"Seat"
         [HttpPost]
         [Route("CreateSeatToSector")]
-        public async Task<IActionResult> CreateSeatToSector(Seat seat)
+        public async Task<IActionResult> CreateSeatToSector(Seat seat,int totalSeats)
         {
             try
             {
                 var um = new SceneryManager();
-                um.CreateSeat(seat);
+                um.CreateSeat(seat,totalSeats);
                 return Ok(seat);
             }
             catch (Exception ex)

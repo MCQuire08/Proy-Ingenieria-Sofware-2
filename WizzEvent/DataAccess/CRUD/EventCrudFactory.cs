@@ -168,41 +168,6 @@ namespace DataAccess.CRUD
         }
         #endregion
 
-        #region"Type of Ticket"
-        public void CreateTicketTypeToEvent(TicketType ticketType)
-        {
-            var sqlOperation = _mapper.GetCreateTicketTypeToEvent(ticketType);
-            _dao.ExecuteProcedure(sqlOperation);
-        }
-
-        public void DeleteTicketTypeToEvent(TicketType ticketType)
-        {
-            var sqlOperation = _mapper.GetDeleteTicketTypeToEvent(ticketType);
-            _dao.ExecuteProcedure(sqlOperation);
-        }
-
-        public List<T> RetrieveAllTicketTypeToEvent<T>(int idEvent)
-        {
-            var lstTicketType = new List<T>();
-
-            var sqlOperation = _mapper.GetRetrieveAllTicketTypeToEvent(idEvent);
-
-            var lstResults = _dao.ExecuteQueryProcedure(sqlOperation);
-
-            if (lstResults.Count > 0)
-            {
-                var objs = _mapper.BuildTicketTypes(lstResults);
-
-                foreach (var obj in objs)
-                {
-                    lstTicketType.Add((T)Convert.ChangeType(obj, typeof(T)));
-                }
-            }
-
-            return lstTicketType;
-        }
-        #endregion
-
         #region"Images"
         public void AddImageToEvent(Image image)
         {

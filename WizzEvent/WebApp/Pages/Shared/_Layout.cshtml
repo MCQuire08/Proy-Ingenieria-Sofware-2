@@ -72,6 +72,10 @@
                             <a class="btn btn-danger m-2" id="btnSingOut" asp-page="/index" onclick="CerrarSesion()">Cerrar Sesion</a>
                         </li>
                         <li class="nav-item">
+                            <i class="fa-solid fa-cart-shopping" id="btnCart"></i><p class="item-count" id="items-quantity">0</p>
+                        </li>
+
+                        <li class="nav-item" id="cart">
                             <a class="btn btn-secondary m-2 btn-lg" id="btnLogin" asp-page="/loginuser">Iniciar Sesion</a>
                         </li>
                         
@@ -86,5 +90,32 @@
             @RenderBody()
         </main>
     </div>
+    <script>
+
+        function actualizarCantidad() {
+            var idUser = localStorage.getItem('idUsuario');
+
+            $.ajax({
+                url: "https://localhost:7152/api/ShoppingCart/RetrieveCantCartItems?idUser=" + idUser,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#items-quantity').text(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Llamar a la función cuando la página se carga inicialmente
+        $(document).ready(function () {
+            actualizarCantidad();
+        });
+
+        $('#btnCart').click(function () {
+
+        });
+    </script>
 </body>
 </html>

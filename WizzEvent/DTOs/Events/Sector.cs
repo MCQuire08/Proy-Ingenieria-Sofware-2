@@ -13,6 +13,8 @@ namespace DTOs.Events
         public int IdScenery { get; set; }
         [Required(ErrorMessage = "Sector name is required.")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Sector price is required.")]
+        public decimal Price { get; set; }
         [Required(ErrorMessage = "Sector state is required.")]
         public string State { get; set; }
         [Required(ErrorMessage = "Seats number is required.")]

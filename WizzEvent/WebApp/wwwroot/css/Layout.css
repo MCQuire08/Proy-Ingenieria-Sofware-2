@@ -10,3 +10,16 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.nav-item {
+    display: flex;
+    align-items: center; 
+}
+
+.fa-cart-shopping {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.item-count {
+    margin: 0;
+}

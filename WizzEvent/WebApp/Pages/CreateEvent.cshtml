@@ -86,17 +86,17 @@
                         <th>Precio</th>
                     </tr>
                     <tr>
-                        <td>General:</td>
+                        <td>General</td>
                         <td><input type="number" class="form-control" id="txtTicketsGeneral" value="0" min="0"></td>
                         <td><input type="number" class="form-control" id="txtPriceGeneral" value="0" min="0"></td>
                     </tr>
                     <tr>
-                        <td>Estudiantes:</td>
+                        <td>Estudiantes</td>
                         <td><input type="number" class="form-control" id="txtTicketsStudents" value="0" min="0"></td>
                         <td><input type="number" class="form-control" id="txtPriceStudents" value="0" min="0"></td>
                     </tr>
                     <tr>
-                        <td>Adultos Mayores:</td>
+                        <td>Adultos Mayores</td>
                         <td><input type="number" class="form-control" id="txtTicketsAdults" value="0" min="0"></td>
                         <td><input type="number" class="form-control" id="txtPriceAdults" value="0" min="0"></td>
                     </tr>
@@ -157,9 +157,9 @@
             <div>
                 <label for="exampleSelect1" class="form-label mt-4">Escenario:</label>
                 <select class="form-select" id="sltScenery">
-                    <option>Auditorio</option>
-                    <option>Parque Viva</option>
-                    <option>Estadio Nacional</option>
+                    <option data-location="La Union, San Jose">Auditorio</option>
+                    <option data-location="La Guacima, Alajuela">Parque Viva</option>
+                    <option data-location="La Sabana, San Jose">Estadio Nacional</option>
                 </select>
             </div>
         </div>
@@ -256,9 +256,9 @@
 
             if (selectedScenery === "Auditorio") {
                 $("#scenery1").show();
-            } else if (selectedScenery === "Parque Viva") {
-                $("#scenery2").show();
             } else if (selectedScenery === "Estadio Nacional") {
+                $("#scenery2").show();
+            } else if (selectedScenery === "Parque Viva") {
                 $("#scenery3").show();
             }
         });

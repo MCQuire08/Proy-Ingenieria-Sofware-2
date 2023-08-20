@@ -104,37 +104,6 @@ namespace DataAccess.Mapper
         }
         #endregion
 
-        #region"Type of Ticket"
-
-        public BaseDTO BuildTicketType(Dictionary<string, object> row)
-        {
-            var ticketTypeDTO = new TicketType
-            {
-                Id = (int)row["IdTicketType"],
-                IdEvent = (int)row["IdEvent"],
-                Name = row["Name"] != DBNull.Value ? (string)row["Name"] : string.Empty,
-                Price = row["Price"] != DBNull.Value ? (float)(double)row["Price"] : 0.0f, 
-                Amount = row["Amount"] != DBNull.Value ? (int)row["Amount"] : 0,
-            };
-
-            return ticketTypeDTO;
-        }
-
-        public List<BaseDTO> BuildTicketTypes(List<Dictionary<string, object>> lstRows)
-        {
-            var lstResults = new List<BaseDTO>();
-
-            foreach (var item in lstRows)
-            {
-                var ticketTypeDTO = BuildTicketType(item);
-                lstResults.Add(ticketTypeDTO);
-            }
-
-            return lstResults;
-        }
-
-        #endregion
-
         #region"Images"
         public Image BuildImage(Dictionary<string, object> row)
         {
@@ -346,43 +315,6 @@ namespace DataAccess.Mapper
 
             return sqlOperation;
         }
-        #endregion
-
-        #region"Type of Ticket"
-        public SQLOperation GetCreateTicketTypeToEvent(TicketType ticketType)
-        {
-            var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "CRE_EVENT_TICKET_TYPE_PR";
-
-            sqlOperation.AddIntParam("P_IDEVENT", ticketType.IdEvent);
-            sqlOperation.AddVarcharParam("P_NAME", ticketType.Name);
-            sqlOperation.AddFloatParam("P_PRICE", ticketType.Price); 
-            sqlOperation.AddIntParam("P_AMOUNT", ticketType.Amount);
-
-            return sqlOperation;
-        }
-
-        public SQLOperation GetRetrieveAllTicketTypeToEvent(int idEvent)
-        {
-            var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "RET_ALL_EVENT_TICKET_TYPE_PR";
-
-            sqlOperation.AddIntParam("P_IDEVENT", idEvent);
-
-            return sqlOperation;
-        }
-
-        public SQLOperation GetDeleteTicketTypeToEvent(TicketType ticketType)
-        {
-            var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "DEL_EVENT_TICKET_TYPE_PR";
-
-            sqlOperation.AddIntParam("P_IDEVENT", ticketType.IdEvent);
-            sqlOperation.AddIntParam("P_IDTICKETTYPE", ticketType.Id);
-
-            return sqlOperation;
-        }
-
         #endregion
 
         #region"Images"
