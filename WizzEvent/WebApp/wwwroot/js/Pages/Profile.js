@@ -32,7 +32,7 @@ function ProfileController() {
         var serviceToDelete = self.ApiService + "/Update";
 
         ctrlActions.PutToAPI(serviceToDelete, user, function (data) {
-           
+
         });
     }
 
@@ -52,36 +52,26 @@ function ProfileController() {
             return null;
         }
     }
-    //this.LoadTable = function () {
-    //    var ctrlActions = new ControlActions();
-    //    var self = this;
+    this.LoadTable = function () {
+        var ctrlActions = new ControlActions();
+        var self = this;
 
-    //    var urlService = ctrlActions.GetUrlApiService(this.ApiService + "/RetrieveAll");
-
-
-    //    var columns = [];
+        var urlService ='';
 
 
-    //    columns[0] = { 'data': 'nombre' };
-    //    columns[1] = { 'data': 'apellidos' };
-    //    columns[2] = { 'data': 'tipoIdentificacion' };
-    //    columns[3] = { 'data': 'numeroIdentificacion' };
-    //    columns[4] = { 'data': 'email' };
-    //    columns[5] = { 'data': 'telefono' };
-    //    columns[6] = {
-    //        'data': null,
-    //        'render': async function (data, type, row) {
-    //            const rolNamePromise = self.getRoleName(row.id);
-    //            const rolNameCellIndex = 6; // Index of the cell where you want to update the role name
+        var columns = [];
 
-    //            const rolName = await rolNamePromise;
 
-    //            // Get the cell element within the row and update its content with the role name
-    //            return `${rolName}`;
+        columns[0] = { 'data': 'nombre' };
+        columns[2] = { 'data': 'apellidos' };
+        columns[3] = { 'data': 'tipoIdentificacion' };
+        columns[4] = {
+            'data': null
+        }
+    }
 
-    //            // Return empty string to prevent initial rendering
-    //        }
+    var table = $("#tblBoletos").DataTable();
 
-    //    }
-    //}
+  
+
 }
