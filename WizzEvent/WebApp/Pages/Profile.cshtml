@@ -49,14 +49,38 @@
                     <div class=" opciones" data-rol="Gestor de Eventos">
                         <div class="d-flex flex-column align-items-center">
                             <label>Membresía actual:</label>
-                            <span>WizzGold</span>
-                            <button class="btn btn-secondary mt-2">Cambiar Membresía</button>
+                            <span id="txtMembresia">WizzGoat</span>
+                            <button class="btn btn-secondary mt-2" id="compraMembresia" data-toggle="modal" data-target="#membresiasModal">Cambiar Membresía</button>
                         </div>
               
                     </div>
                     <!-- Contenido específico para Gestor de Eventos -->
                 </div>
             </div>
+            <div class="modal fade" id="membresiasModal" tabindex="-1" aria-labelledby="membresiasModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="membresiasModalLabel">Selección de Membresías</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Contenido de las membresías se llenará aquí dinámicamente -->
+                            <div class="modal-body">
+                                <div class="row" id="membresiasContainer">
+                                <!-- Las membresías se agregarán aquí dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Sección para Cliente General -->
             <div class="p-5">
