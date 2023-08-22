@@ -314,6 +314,75 @@
             throw error;
         }
     }
+
+    this.addMessageToChat = function (message, sender) {
+        const chatOutput = $('#chatOutput');
+        const messageDiv = $('<div>').text(message);
+
+        if (sender === 'user') {
+            messageDiv.addClass('user-message');
+        } else if (sender === 'bot') {
+            messageDiv.addClass('bot-message');
+        }
+
+        chatOutput.append(messageDiv);
+        chatOutput.scrollTop(chatOutput[0].scrollHeight); 
+    }
+
+    this.handleChatMessage = async function () {
+        const userInput = $('#userInput');
+        const message = userInput.val().toLowerCase();
+        if (message.trim() === '') return;
+
+        this.addMessageToChat(message, 'user');
+
+        try {
+            const events = await this.fetchEvents();
+            let eventInfo = '';
+
+            if (message.includes("todos los eventos")) {
+                events.forEach(event => {
+                    eventInfo += `${event.name}, Fecha: ${event.eventDate}\n`;
+                });
+            } else {
+                const specificEvents = events.filter(event =>
+                    message.split(' ').some(word =>
+                        event.name.toLowerCase().includes(word) && word.length > 2
+                    )
+                );
+
+                if (specificEvents.length > 0) {
+                    specificEvents.forEach(event => {
+                        eventInfo += `${event.name}, Fecha: ${event.eventDate}\n`;
+                    });
+                } else {
+                    eventInfo = "No se encontraron eventos que coincidan con tu búsqueda.";
+                }
+            }
+
+            this.addMessageToChat(eventInfo, 'bot');
+        } catch (error) {
+            this.addMessageToChat('Error al recuperar la información de eventos.', 'bot');
+        }
+
+        userInput.val('');
+    }
+
+    this.InitView = function () {
+        console.log('HomePage init');
+        this.CreateCardsOfHomePage();
+
+        $('#sendBtn').on('click', () => {
+            this.handleChatMessage();
+        });
+
+        $('#userInput').on('keypress', (e) => {
+            if (e.which === 13) { 
+                this.handleChatMessage();
+                e.preventDefault(); 
+            }
+        });
+    }
 }
 
 $(document).ready(function () {

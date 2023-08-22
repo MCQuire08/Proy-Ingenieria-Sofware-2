@@ -5,8 +5,8 @@ $(document).ready(function () {
 })
 
 function AdminEventsController() {
-    this.ViewName = "Membresias";
-    this.ApiService = "Events";
+    this.ViewName = "Eventos";
+    this.ApiService = "Event";
     var self = this;
 
 
@@ -19,7 +19,7 @@ function AdminEventsController() {
 
 
         var ctrlActions = new ControlActions();
-        var serviceToDelete = self.ApiService + "/Update";
+        var serviceToDelete = self.ApiService + "/UpdateEvent";
 
         ctrlActions.PutToAPI(serviceToDelete, event, function (data) {
 
@@ -28,46 +28,27 @@ function AdminEventsController() {
 
     }
 
-    this.create = function () {
-
-        var membership = {}
-        membership.Id = "0"
-        membership.Name = $("#inputName").val();
-        membership.Price = $("#inputPrice").val();
-        membership.TicketsToSellMin = $("#inputTicketsMin").val();
-        membership.TicketsToSellMax = $("#inputTicketsMax").val();
-        membership.Commission = $("#inputCommission").val();
-
-        var ctrlActions = new ControlActions();
-        var serviceToDelete = self.ApiService + "/Create";
-
-        ctrlActions.PostToAPI(serviceToDelete, membership, function (data) {
-
-            self.LoadTable();
-
-            //limpio los espacios del form
-            $("#inputName").val("");
-            $("#inputPrice").val("");
-            $("#inputTicketsMin").val("");
-            $("#inputTicketsMax").val("");
-            $("#inputCommission").val("");
-
-        });
-    } // No esta desarrollado
 
     this.delete = function (id) { 
 
         var event = {
-            id: id,
-            name: "string",
-            price: 0,
-            ticketsToSell: 0,
-            commission: 0
+            "id": id,
+            "name": "string",
+            "slogan": "string",
+            "description": "string",
+            "modality": "string",
+            "eventDate": "string",
+            "totalTickets": 0,
+            "information": "string",
+            "paymentMethod": "string",
+            "freeTickets": 0,
+            "ownedBy": 0,
+            "state": "string"
 
         }
 
         var ctrlActions = new ControlActions();
-        var serviceToDelete = self.ApiService + "/Delete";
+        var serviceToDelete = self.ApiService + "/DeleteEvent";
         ctrlActions.DeleteToAPI(serviceToDelete, event, function (data) {
             console.log("deleted")
             self.LoadTable();
@@ -121,26 +102,37 @@ function AdminEventsController() {
 
             if (rowData) {
                 var id = rowData.id;
-                var ticketsSellMin = rowData.ticketsToSellMin;
-                var ticketsSellMax = rowData.ticketsToSellMax;
                 var name = rowData.name;
-                var commission = rowData.commission;
-                var price = rowData.price;
+                var slogan = rowData.slogan;
+                var description = rowData.description;
+                var modality = rowData.modality;
+                var eventDate = rowData.eventDate;
+                var totalTickets = rowData.totalTickets;
+                var information = rowData.information;
+                var paymentMethod = rowData.paymentMethod;
+                var freeTickets = rowData.freeTickets;
+                var state = rowData.state;
 
-
-                var membership = {
+                var event = {
                     id: id,
-                    name: name,
-                    ticketsToSellMin: ticketsSellMin,
-                    ticketsToSellMax: ticketsSellMax,
-                    commission: commission,
-                    price: price
+                    name: name,             
+                    slogan: slogan,
+                    description: description,
+                    modality: modality,
+                    eventDate: eventDate,
+                    totalTickets: totalTickets,
+                    information: information,
+                    paymentMethod: paymentMethod,
+                    freeTickets: freeTickets,
+                    state: state
                 };
-                showEditWindow(membership);
+
+                showEditWindow(event);
             }
         });
 
-        // Handle Delete button click
+
+  
         $("#tblEvent").on('click', '.btn-delete', function () {
             var tr = $(this).closest('tr');
             var row = table.row(tr);
@@ -150,13 +142,13 @@ function AdminEventsController() {
                 var id = rowData.id;
 
                 Swal.fire({
-                    title: '¿Está seguro?',
-                    text: '¡Esta acción es irreversible!',
+                    title: 'Esta seguro?',
+                    text: 'Esta accion es irreversible!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, borrar',
+                    confirmButtonText: 'Si, borrar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -174,47 +166,115 @@ function AdminEventsController() {
         });
     };
 
-    function showEditWindow(membership) {
+    function showEditWindow(event) {
         var form = $('<form>');
 
-        var nameLabel = $('<label for="inputName">Name:</label>');
-        var nameInput = $('<input type="text" id="inputName" name="name" class="form-control">').val(membership.name);
+        var nameLabel = $('<label for="inputName">Nombre:</label>');
+        var nameInput = $('<input type="text" id="inputName" name="name" class="form-control">').val(event.name);
         form.append(nameLabel, nameInput);
 
-        // Create a row for the range of tickets inputs
-        var ticketsSellRow = $('<div class="row"></div>');
+        var sloganLabel = $('<label for="inputSlogan">Slogan:</label>');
+        var sloganInput = $('<input type="text" id="inputSlogan" name="slogan" class="form-control">').val(event.slogan);
+        form.append(sloganLabel, sloganInput);
 
-        var ticketsSellMinCol = $('<div class="col-md-6"></div>');
-        var ticketsSellMinLabel = $('<label for="inputTicketsSellMin">Min Tickets to Sell:</label>');
-        var ticketsSellMinInput = $('<input type="text" id="inputTicketsSellMin" name="ticketsSellMin" class="form-control">').val(membership.ticketsToSellMin);
-        ticketsSellMinCol.append(ticketsSellMinLabel, ticketsSellMinInput);
+        var descriptionLabel = $('<label for="inputDescription">Descripcion:</label>');
+        var descriptionInput = $('<input type="text" id="inputDescription" name="description" class="form-control">').val(event.description);
+        form.append(descriptionLabel, descriptionInput);
 
-        var ticketsSellMaxCol = $('<div class="col-md-6"></div>');
-        var ticketsSellMaxLabel = $('<label for="inputTicketsSellMax">Max Tickets to Sell:</label>');
-        var ticketsSellMaxInput = $('<input type="text" id="inputTicketsSellMax" name="ticketsSellMax" class="form-control">').val(membership.ticketsToSellMax);
-        ticketsSellMaxCol.append(ticketsSellMaxLabel, ticketsSellMaxInput);
+        var modalityLabel = $('<label for="inputModality">Modalidad:</label>');
+        var modalitySelect = $('<select id="inputModality" name="modality" class="form-control"></select>');
 
-        ticketsSellRow.append(ticketsSellMinCol, ticketsSellMaxCol);
-        form.append(ticketsSellRow);
+        var optionPresencial = $('<option value="Presencial">Presencial</option>');
+        var optionVirtual = $('<option value="Virtual">Virtual</option>');
 
-        var commissionLabel = $('<label for="inputCommission">Commission:</label>');
-        var commissionInput = $('<input type="text" id="inputCommission" name="commission" class="form-control">').val(membership.commission);
-        form.append(commissionLabel, commissionInput);
+        if (event.modality === 'Presencial') {
+            optionPresencial.attr('selected', 'selected');
+        } else if (event.modality === 'Virtual') {
+            optionVirtual.attr('selected', 'selected');
+        }
 
-        var priceLabel = $('<label for="inputPrice">Price:</label>');
-        var priceInput = $('<input type="text" id="inputPrice" name="price" class="form-control">').val(membership.price);
-        form.append(priceLabel, priceInput);
+        modalitySelect.append(optionPresencial, optionVirtual);
+        form.append(modalityLabel, modalitySelect);
 
-        showModal('Edit Membership', form, function () {
-            membership.name = nameInput.val();
-            membership.ticketsToSellMin = ticketsSellMinInput.val();
-            membership.ticketsToSellMax = ticketsSellMaxInput.val();
-            membership.commission = commissionInput.val();
-            membership.price = priceInput.val();
+        var eventDateLabel = $('<label for="inputEventDate">Fecha del evento:</label>');
+        var eventDateInput;
 
-            self.Update(membership);
+        if (event.eventDate.includes(' ')) {
+       
+            var dateParts = event.eventDate.split(' ');
+            var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var month = monthNames.indexOf(dateParts[0]) + 1;
+            var day = parseInt(dateParts[1], 10);
+            var year = parseInt(dateParts[2], 10);
+
+     
+            var eventDate = new Date(year, month - 1, day);
+
+            
+            var eventDateValue = eventDate.toISOString().split('T')[0];
+
+            eventDateInput = $('<input type="date" id="inputEventDate" name="eventDate" class="form-control">').val(eventDateValue);
+        } else {
+           
+            var isoDate = event.eventDate.split('T')[0];
+            var isoTime = event.eventDate.split('T')[1];
+            var eventDateValue = isoDate + 'T' + isoTime; 
+
+            eventDateInput = $('<input type="date" id="inputEventDate" name="eventDate" class="form-control">').val(eventDateValue);
+        }
+
+        form.append(eventDateLabel, eventDateInput);
+
+
+
+        var totalTicketsLabel = $('<label for="inputTotalTickets">Total Tickets:</label>');
+        var totalTicketsInput = $('<input type="text" id="inputTotalTickets" name="totalTickets" class="form-control">').val(event.totalTickets);
+        form.append(totalTicketsLabel, totalTicketsInput);
+
+        var informationLabel = $('<label for="inputInformation">Informacion:</label>');
+        var informationInput = $('<input type="text" id="inputInformation" name="information" class="form-control">').val(event.information);
+        form.append(informationLabel, informationInput);
+        var paymentMethodLabel = $('<label for="inputPaymentMethod">Metodo de pago:</label>');
+        var paymentMethodSelect = $('<select id="inputPaymentMethod" name="paymentMethod" class="form-control"></select>');
+
+        var optionPaypal = $('<option value="Paypal">Paypal</option>');
+        var optionSunpe = $('<option value="SUNPE">SUNPE</option>');
+        var optionAmbas = $('<option value="PS">Ambas</option>');
+
+        if (event.paymentMethod === 'Pay') {
+            optionPaypal.attr('selected', 'selected');
+        } else if (event.paymentMethod === 'SUN') {
+            optionSunpe.attr('selected', 'selected');
+        } else if (event.paymentMethod === 'PS') {
+            optionAmbas.attr('selected', 'selected');
+        }
+
+        paymentMethodSelect.append(optionPaypal, optionSunpe, optionAmbas);
+        form.append(paymentMethodLabel, paymentMethodSelect);
+        var freeTicketsLabel = $('<label for="inputFreeTickets">Tiquetes cortesia:</label>');
+        var freeTicketsInput = $('<input type="text" id="inputFreeTickets" name="freeTickets" class="form-control">').val(event.freeTickets);
+        form.append(freeTicketsLabel, freeTicketsInput);
+
+        var stateLabel = $('<label for="inputState">State:</label>');
+        var stateInput = $('<input type="text" id="inputState" name="state" class="form-control">').val(event.state);
+        form.append(stateLabel, stateInput);
+
+        showModal('Editar Evento', form, function () {
+            event.name = nameInput.val();
+            event.slogan = sloganInput.val();
+            event.description = descriptionInput.val();
+            event.modality = modalitySelect.val();
+            event.eventDate = eventDateInput.val();
+            event.totalTickets = totalTicketsInput.val();
+            event.information = informationInput.val();
+            event.paymentMethod = paymentMethodSelect.val();
+            event.freeTickets = freeTicketsInput.val();
+            event.state = stateInput.val();
+
+            self.Update(event);
         });
     }
+
 
     function showModal(title, content, onSave) {
         var modal = $('<div class="modal fade" tabindex="-1" role="dialog">');

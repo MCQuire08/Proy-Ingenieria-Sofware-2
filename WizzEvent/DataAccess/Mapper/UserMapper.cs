@@ -111,11 +111,11 @@ namespace DataAccess.Mapper
         public SQLOperation GetDeleteStatement(BaseDTO dto)
         {
             var sqlOperation = new SQLOperation();
-            sqlOperation.ProcedureName = "DEL_USER_PR";
+            sqlOperation.ProcedureName = "DEL_USER_WITH_ROLES_PR";
 
             var user = (User)dto;
 
-            sqlOperation.AddIntParam("P_USER_ID", user.Id);
+            sqlOperation.AddIntParam("P_IdUser", user.Id);
 
             return sqlOperation;
         }

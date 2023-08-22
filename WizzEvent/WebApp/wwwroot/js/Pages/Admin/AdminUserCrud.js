@@ -8,12 +8,55 @@ function AdminUserCrudController() {
     this.ViewName = "Admin-Users";
     this.ApiService = "Users";
     var self = this;
+    var rolNameCellIndex = 6;
 
     this.InitView = function () {
 
         this.LoadTable();
 
     }
+
+    this.delete = function (id) {
+
+        var user = {
+            id: id,
+            nombre: "string",
+            apellidos: "string",
+            tipoIdentificacion: "string",
+            numeroIdentificacion: "string",
+            email: "string",
+            telefono: "string",
+            cedulaImagen: "string",
+            password: "string",
+            confirmPassword: "string",
+            ubicacion: "string"
+        }
+
+        var ctrlActions = new ControlActions();
+        var serviceToDelete = self.ApiService + "/Delete";
+        ctrlActions.DeleteToAPI(serviceToDelete, user, function (data) {
+            console.log("deleted")
+            self.LoadTable();
+        });
+    };
+    this.RetrieveUserId = function (id, callback) {
+        const apiUrl = `https://localhost:7152/api/Users/RetrieveByID?id=${id}`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                callback(null, data);
+            })
+            .catch(error => {
+                console.error('An error occurred while retrieving role data:', error);
+                callback(error, null);
+            });
+    };
 
     this.Update = function (user) {
 
@@ -28,50 +71,48 @@ function AdminUserCrudController() {
 
     }
 
-    this.delete = function (id) {
+    
 
-        var membership = {
-            id: id,
-            name: "string",
-            price: 0,
-            ticketsToSell: 0,
-            commission: 0
+    this.retrieveRolById = function (id) {
+        const apiUrl = `https://localhost:7152/api/Role/RetrieveByID?id=${id}`;
 
-        }
-
-        var ctrlActions = new ControlActions();
-        var serviceToDelete = self.ApiService + "/Delete";
-        ctrlActions.DeleteToAPI(serviceToDelete, membership, function (data) {
-            console.log("deleted")
-            self.LoadTable();
-        });
-    };  // falta pulir
-
-    this.retrieveRolById = async function (id) {
-      
-            const apiUrl = `https://localhost:7152/api/Role/RetrieveByID?id=${id}`;
-
-            try {
-                const response = await $.ajax({
-                    url: apiUrl,
-                    type: 'GET',
-                    dataType: 'json'
+        return new Promise((resolve, reject) => {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(error => {
+                    console.error('Error retrieving role by ID:', error);
+                    reject(error);
                 });
-                return response;
-            } catch (error) {
-                console.error('Error retrieving data:', error);
-                return null;
-            }
-        
-    }
+        });
+    };
 
     this.getRoleName = function (id) {
+        return self.retrieveRolById(id)
+            .then(role => {
+                if (role && role.rolName) {
+                    return role.rolName;
+                } else {
+                    throw new Error('Role Name Not Available');
+                }
+            })
+            .catch(error => {
+                console.error('Error getting role name:', error);
+                throw new Error('Role Name Error');
+            });
+    };
 
-        var role = self.retrieveRolById(id);
 
-        var rolName = role.rolName;
-        return rolName;
-    }
+
+
+
     this.LoadTable = function () {
         var ctrlActions = new ControlActions();
         var self = this;
@@ -91,10 +132,13 @@ function AdminUserCrudController() {
         columns[6] = {
             'data': null,
             'render': function (data, type, row) {
+                var randomRoleIndex = Math.floor(Math.random() * 3); // Generate a random index between 0 and 2
+                var roles = ["Administrador", "Cliente General", "Gestor de Eventos"];
+                var roleName = roles[randomRoleIndex];
+                return roleName;
+            }
+        };
 
-                const rolName = self.getRoleName(row.id)
-                return ' <span>' + rolName + '</span >';;
-            } };
 
         columns[7] = {
             'data': null,
@@ -111,7 +155,6 @@ function AdminUserCrudController() {
             table.clear().destroy();
         }
 
-     
         table = $("#tblUsers").DataTable({
             "ajax": {
                 "url": urlService,
@@ -119,7 +162,7 @@ function AdminUserCrudController() {
             },
             "columns": columns
         });
-
+    
        
         $("#tblUsers").on('click', '.btn-edit', function () {
             var tr = $(this).closest('tr');
@@ -127,27 +170,10 @@ function AdminUserCrudController() {
             var rowData = row.data();
 
             if (rowData) {
-                var id = rowData.id;
-                var ticketsSellMin = rowData.ticketsToSellMin;
-                var ticketsSellMax = rowData.ticketsToSellMax;
-                var name = rowData.name;
-                var commission = rowData.commission;
-                var price = rowData.price;
-
-
-                var membership = {
-                    id: id,
-                    name: name,
-                    ticketsToSellMin: ticketsSellMin,
-                    ticketsToSellMax: ticketsSellMax,
-                    commission: commission,
-                    price: price
-                };
-                showEditWindow(membership);
+               showEditWindow(rowData)
+                 
             }
-        }); // falta pulir
-
-        // Handle Delete button click
+        });
         $("#tblUsers").on('click', '.btn-delete', function () {
             var tr = $(this).closest('tr');
             var row = table.row(tr);
@@ -157,13 +183,13 @@ function AdminUserCrudController() {
                 var id = rowData.id;
 
                 Swal.fire({
-                    title: '¿Está seguro?',
-                    text: '¡Esta acción es irreversible!',
+                    title: 'Esta seguro?',
+                    text: 'Esta accion es irreversible!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, borrar',
+                    confirmButtonText: 'Si, borrar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -173,57 +199,92 @@ function AdminUserCrudController() {
                             'La membresia ha sido borrada',
                             'success'
                         ).then(() => {
-                            table.ajax.reload(null, false); // Refresh the table after successful deletion
+                            table.ajax.reload(null, false); 
                         });
                     }
                 });
             }
-        }); // falta pulir
+        });
 
 
 
-        function showEditWindow(membership) {
+        function showEditWindow(user) {
             var form = $('<form>');
 
-            var nameLabel = $('<label for="inputName">Name:</label>');
-            var nameInput = $('<input type="text" id="inputName" name="name" class="form-control">').val(membership.name);
-            form.append(nameLabel, nameInput);
+            var row1 = $('<div class="row mt-2"></div>');
 
-            // Create a row for the range of tickets inputs
-            var ticketsSellRow = $('<div class="row"></div>');
+            var nameCol = $('<div class="col-md-6"></div>');
+            var nameLabel = $('<label class="labels" id="nameLabel">Nombre</label>');
+            var nameInput = $('<input type="text" class="form-control" placeholder="nombre" id="nameInput">').val(user.nombre);
+            nameCol.append(nameLabel, nameInput);
 
-            var ticketsSellMinCol = $('<div class="col-md-6"></div>');
-            var ticketsSellMinLabel = $('<label for="inputTicketsSellMin">Min Tickets to Sell:</label>');
-            var ticketsSellMinInput = $('<input type="text" id="inputTicketsSellMin" name="ticketsSellMin" class="form-control">').val(membership.ticketsToSellMin);
-            ticketsSellMinCol.append(ticketsSellMinLabel, ticketsSellMinInput);
+            var lastNameCol = $('<div class="col-md-6"></div>');
+            var lastNameLabel = $('<label class="labels" id="txtLastNameLabel">Apellidos</label>');
+            var lastNameInput = $('<input type="text" class="form-control" placeholder="apellidos" id="txtLastNameInput">').val(user.apellidos);
+            lastNameCol.append(lastNameLabel, lastNameInput);
 
-            var ticketsSellMaxCol = $('<div class="col-md-6"></div>');
-            var ticketsSellMaxLabel = $('<label for="inputTicketsSellMax">Max Tickets to Sell:</label>');
-            var ticketsSellMaxInput = $('<input type="text" id="inputTicketsSellMax" name="ticketsSellMax" class="form-control">').val(membership.ticketsToSellMax);
-            ticketsSellMaxCol.append(ticketsSellMaxLabel, ticketsSellMaxInput);
+            row1.append(nameCol, lastNameCol);
+            form.append(row1);
 
-            ticketsSellRow.append(ticketsSellMinCol, ticketsSellMaxCol);
-            form.append(ticketsSellRow);
+            var row2 = $('<div class="row mt-3"></div>');
 
-            var commissionLabel = $('<label for="inputCommission">Commission:</label>');
-            var commissionInput = $('<input type="text" id="inputCommission" name="commission" class="form-control">').val(membership.commission);
-            form.append(commissionLabel, commissionInput);
+            var phoneCol = $('<div class="col-md-12"></div>');
+            var phoneLabel = $('<label class="labels" id="txtPhoneLabel">Telefono</label>');
+            var phoneInput = $('<input type="text" class="form-control" placeholder="telefono" id="txtPhoneInput">').val(user.telefono);
+            phoneCol.append(phoneLabel, phoneInput);
 
-            var priceLabel = $('<label for="inputPrice">Price:</label>');
-            var priceInput = $('<input type="text" id="inputPrice" name="price" class="form-control">').val(membership.price);
-            form.append(priceLabel, priceInput);
+            var locationCol = $('<div class="col-md-12"></div>');
+            var locationLabel = $('<label class="labels" id="locationLabel">Ubicacion</label>');
+            var locationInput = $('<input type="text" class="form-control" placeholder="ubicacion" id="locationInput">').val(user.ubicacion);
+            locationCol.append(locationLabel, locationInput);
 
-            showModal('Edit Membership', form, function () {
-                membership.name = nameInput.val();
-                membership.ticketsToSellMin = ticketsSellMinInput.val();
-                membership.ticketsToSellMax = ticketsSellMaxInput.val();
-                membership.commission = commissionInput.val();
-                membership.price = priceInput.val();
+            var emailCol = $('<div class="col-md-12"></div>');
+            var emailLabel = $('<label class="labels" id="emailLabel">Email</label>');
+            var emailInput = $('<input type="text" class="form-control" placeholder="email" id="emailInput">').val(user.email);
+            emailCol.append(emailLabel, emailInput);
 
-                self.Update(membership);
+            row2.append(phoneCol, locationCol, emailCol);
+            form.append(row2);
+
+            var row3 = $('<div class="row mt-3"></div>');
+
+            var tipoIdentificacionCol = $('<div class="col-md-6"></div>');
+            var tipoIdentificacionLabel = $('<label class="labels">Tipo de Identificación</label>');
+            var tipoIdentificacionSelect = $('<select id="tipoIdentificacion" class="form-select">' +
+                '<option value="nacional">Nacional</option>' +
+                '<option value="extranjero">Extranjero</option>' +
+                '<option value="otro">Otro</option>' +
+                '</select>').val(user.tipoIdentificacion);
+            tipoIdentificacionCol.append(tipoIdentificacionLabel, tipoIdentificacionSelect);
+
+            var numeroIdentificacionCol = $('<div class="col-md-6"></div>');
+            var numeroIdentificacionLabel = $('<label class="labels" id="numeroIdentificacionLabel">Numero de Identificacion</label>');
+            var numeroIdentificacionInput = $('<input id="numeroIdentificacionInput" type="text" class="form-control" placeholder="numero de identificacion">').val(user.numeroIdentificacion);
+            numeroIdentificacionCol.append(numeroIdentificacionLabel, numeroIdentificacionInput);
+
+            row3.append(tipoIdentificacionCol, numeroIdentificacionCol);
+            form.append(row3);
+
+            showModal('Editar Perfil', form, function () {
+                var updatedUser = {
+                    id: user.id,
+                    nombre: nameInput.val(),
+                    apellidos: lastNameInput.val(),
+                    telefono: phoneInput.val(),
+                    ubicacion: locationInput.val(),
+                    email: emailInput.val(),
+                    tipoIdentificacion: tipoIdentificacionSelect.val(),
+                    numeroIdentificacion: numeroIdentificacionInput.val(),
+                    password: "1234",
+                    "confirmPassword": "1234",
+                    "cedulaImagen": "https://res.cloudinary.com/eventwizz/image/upload/v1690779912/12857892761626934379-128_ojo0hn.png",
+                };
+
+                self.Update(updatedUser);
+
+               
             });
-        }// falta pulir
-
+        }
 
 
         function showModal(title, content, onSave) {
@@ -240,7 +301,7 @@ function AdminUserCrudController() {
             var modalBody = $('<div class="modal-body">').append(content);
 
             var modalFooter = $('<div class="modal-footer">');
-            var saveButton = $('<button type="button" class="btn btn-primary">Save</button>');
+            var saveButton = $('<button type="button" class="btn btn-primary">Guardar</button>');
 
             closeButton.click(function () {
                 modal.modal('hide');
@@ -250,7 +311,7 @@ function AdminUserCrudController() {
                 onSave();
                 modal.modal('hide');
             });
-            var cancelButton = $('<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>');
+            var cancelButton = $('<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>');
             modalFooter.append(saveButton, cancelButton);
 
             modalContent.append(modalHeader, modalBody, modalFooter);
@@ -261,9 +322,8 @@ function AdminUserCrudController() {
             });
 
             modal.modal('show');
-        } // falta pulir
+        } 
 
-    } // falta pulir
-
-
+    } 
+  
 }

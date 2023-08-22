@@ -233,7 +233,7 @@ namespace DataAccess.Mapper
             sqlOperation.AddVarcharParam("P_SLOGAN", eevent.Slogan);
             sqlOperation.AddVarcharParam("P_DESCRIPTION", eevent.Description);
             sqlOperation.AddVarcharParam("P_MODALITY", eevent.Modality);
-            //sqlOperation.AddVarcharParam("P_EVENTDATE", eventDateAsString);
+            sqlOperation.AddVarcharParam("P_EVENTDATE", eevent.EventDate);
             sqlOperation.AddIntParam("P_TOTALTICKETS", eevent.TotalTickets);
             sqlOperation.AddVarcharParam("P_INFORMATION", eevent.Information);
             sqlOperation.AddVarcharParam("P_PAYMENTMETHOD", eevent.PaymentMethod);
