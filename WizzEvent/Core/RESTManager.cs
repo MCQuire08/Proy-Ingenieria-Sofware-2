@@ -66,5 +66,26 @@ namespace Core
             }
 
         }
+
+
+        public async Task<bool> PostToApiSUNPE(SunpeTransaction sunpeTransaction)
+        {
+            var url = "https://sunpe.azurewebsites.net/api/SUNPE/SendTEF";
+
+            var httpClient = new HttpClient();
+
+            string jsonUser = JsonConvert.SerializeObject(sunpeTransaction);
+
+            var content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync(url, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.Content.ReadAsStringAsync().Result);
+            }
+
+            return true;
+        }
     }
 }

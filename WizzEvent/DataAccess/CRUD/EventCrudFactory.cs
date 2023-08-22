@@ -64,6 +64,7 @@ namespace DataAccess.CRUD
         {
             var eevent = (Event)dto;
             var lstEvents = new List<T>();
+
             var sqlOperation = _mapper.GetRetrieveByIDStatement(eevent);
 
             var result = _dao.ExecuteQueryProcedure(sqlOperation); ;

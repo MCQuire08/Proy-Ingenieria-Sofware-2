@@ -14,13 +14,17 @@
     this.AddItemsToCart = async function () {
         const baseUrl = 'https://localhost:7152/api/CartItem/CreateCartItem';
         const ticketTableBody = $('#ticketTableBody');
+        let allQuantitiesZero = true; // Flag to track if all quantities are zero
 
         ticketTableBody.find('.type-Ticket').each(function () {
-            const ticketId = $(this).find('.ticket-type').attr('data-ticket-id');
             const quantity = parseInt($(this).find('.quantity').text());
-            var idUser = localStorage.getItem('idUsuario');
-            
+
+
             if (quantity > 0) {
+                allQuantitiesZero = false; // If at least one quantity is greater than zero, set flag to false
+
+                const ticketId = $(this).find('.ticket-type').attr('data-ticket-id');
+                var idUser = localStorage.getItem('idUsuario');
                 const queryParams = `?IdCart=${idUser}&IdSector=${ticketId}&Quantity=${quantity}`;
                 const apiUrl = baseUrl + queryParams;
 
@@ -42,13 +46,13 @@
                                     'Deleted!',
                                     'Vamos a pagar.',
                                     'success'
-                                )
+                                );
                             } else {
                                 location.reload();
                                 $('#modalAddCart').modal('hide');
                                 $('#modalInfo').modal('hide');
                             }
-                        })
+                        });
                     },
                     error: function (error) {
                         responses = false;
@@ -56,8 +60,19 @@
                 });
             }
         });
-        
-    }
+
+        if (allQuantitiesZero) {
+            Swal.fire(
+                'Oops!',
+                'Todas las cantidades están en 0',
+                'error'
+            );
+            return;
+        }
+
+    };
+
+
 
 
     this.loadModalInfo = function (eventData) {
@@ -92,15 +107,17 @@
         sloganElement.before('<br>');
     }
 
-
     this.loadModalSellTickets = async function (eventId) {
         try {
             const sceneryResponse = await this.getSceneryIdForEvent(eventId);
             const sceneryId = sceneryResponse.id;
             const ticketTypes = await this.getScenerySectors(sceneryId);
             const ticketTableBody = $('#ticketTableBody');
+            var view = new HomePageController();
 
             ticketTableBody.empty();
+
+            console.log(ticketTypes);
 
             $.each(ticketTypes, function (index, ticket) {
                 var row = $("<tr>").addClass("type-Ticket");
@@ -134,6 +151,19 @@
 
                 cellQuantity.append(minusIcon).append(quantityP).append(plusIcon);
 
+                var availableTicketsP = $("<p>").addClass("available-tickets");
+
+                view.getSeatsAvailable(ticket.id).done(function (response) {
+                    console.log(response);
+                    var seatsAvailable = response;
+                    availableTicketsP.text("Disponibles: " + seatsAvailable);
+                }).fail(function (error) {
+                    console.error('Error al obtener la cantidad de tickets disponibles:', error);
+                    availableTicketsP.text("Disponibles: Error");
+                });
+
+                cellQuantity.append(availableTicketsP);
+
                 row.append(cellType).append(cellPrice).append(cellQuantity);
                 ticketTableBody.append(row);
             });
@@ -143,10 +173,13 @@
         }
     }
 
-
-
-
-
+    this.getSeatsAvailable = function (sectorId) {
+        return $.ajax({
+            url: 'https://localhost:7152/api/Scenery/RetrieveCantSeatsAvailable?idSector=' + sectorId,
+            method: 'GET',
+            dataType: 'json',
+        });
+    }
 
     this.getSceneryIdForEvent = function (eventId) {
         return $.ajax({

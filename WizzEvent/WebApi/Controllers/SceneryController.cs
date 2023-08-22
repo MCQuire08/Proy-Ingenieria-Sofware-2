@@ -190,6 +190,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveCantSeatsAvailable")]
+        public async Task<IActionResult> RetrieveCantSeatsAvailable(int idSector)
+        {
+            try
+            {
+                var mm = new SceneryManager();
+                var results = mm.RetrieveCantSeatsAvailable(idSector);
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete]
         [Route("DeleteSeatToSector")]
         public async Task<IActionResult> DeleteSeatToSector(Seat seat)

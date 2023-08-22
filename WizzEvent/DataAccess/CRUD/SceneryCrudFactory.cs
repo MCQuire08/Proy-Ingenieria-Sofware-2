@@ -197,6 +197,16 @@ namespace DataAccess.CRUD
             throw new NotImplementedException();
         }
 
+        public int RetrieveCantSeatsAvailable(int idSector)
+        {
+            var lstSeats = new List<int>();
+            var sqlOperation = _mapper.RetrieveCantSeatsAvailable(idSector);
+
+            var result = _dao.ExecuteQueryProcedure(sqlOperation);
+
+            return _mapper.BuildObjectsCantAvailable(result);
+        }
+
 
 
 

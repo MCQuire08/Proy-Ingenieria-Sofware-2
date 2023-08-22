@@ -39,6 +39,29 @@ namespace DataAccess.Mapper
             return lstResults;
         }
 
+        public int BuildObjectCantAvailable(Dictionary<string, object> row)
+        {
+            var cantidad = new 
+            {
+                Cant = (int)row["CantSeats"],
+            };
+
+            return cantidad.Cant;
+        }
+
+        public int BuildObjectsCantAvailable(List<Dictionary<string, object>> lstRows)
+        {
+            var lstResults = new List<int>();
+
+            foreach (var item in lstRows)
+            {
+                var cantidad = BuildObjectCantAvailable(item);
+                lstResults.Add(cantidad);
+            }
+
+            return lstResults[0];
+        }
+
         public BaseDTO BuildSectorObject(Dictionary<string, object> row)
         {
             var sectorDTO = new Sector
@@ -238,6 +261,17 @@ namespace DataAccess.Mapper
 
             sqlOperation.AddIntParam("P_IDSCENERY", idEvent);
             sqlOperation.AddVarcharParam("P_NAME", sector);
+
+            return sqlOperation;
+        }
+
+        public SQLOperation RetrieveCantSeatsAvailable(int idSector)
+        {
+            var sqlOperation = new SQLOperation();
+
+            sqlOperation.ProcedureName = "GET_CANT_SEATS_AVAILABLE_PR";
+
+            sqlOperation.AddIntParam("P_IDSECTOR", idSector);
 
             return sqlOperation;
         }

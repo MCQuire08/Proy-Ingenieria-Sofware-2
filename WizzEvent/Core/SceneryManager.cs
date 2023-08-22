@@ -90,6 +90,12 @@ namespace Core
             return crud.RetrieveAllSeatsOfSector<Seat>(idScenery,idSector);
         }
 
+        public int RetrieveCantSeatsAvailable(int idSector)
+        {
+            var crud = new SceneryCrudFactory();
+            return crud.RetrieveCantSeatsAvailable(idSector);
+        }
+
 
 
         #endregion

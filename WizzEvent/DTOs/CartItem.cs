@@ -9,11 +9,11 @@ namespace DTOs
 {
     public class CartItem : BaseDTO
     {
-        [Required(ErrorMessage = "Id seat is required.")]
-        public int IdSeat { get; set; }
-        [Required(ErrorMessage = "Id event is required.")]
-        public int IdEvent { get; set; }
-        [Required(ErrorMessage = "Price is required.")]
-        public decimal Price { get; set; }
+        public string eventName { get; set; }
+        public string eventDate { get; set; }
+        public string sectorName { get; set; }
+        public int seatId { get; set; }
+        public string seatName { get; set; }
+        public decimal seatPrice { get; set; }
     }
 }
