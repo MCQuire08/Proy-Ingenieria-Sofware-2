@@ -64,7 +64,7 @@
                 </select>
 
                 <label class="col-form-label mt-4" for="inputDefault">Ingrese la fecha del evento:</label>
-                <input type="datetime-local" class="form-control" id="txtEventDate">
+                <input type="datetime-local" class="form-control" id="txtEventDate" min="2023-08-22T00:00">
 
 
                 <label for="formFile" class="form-label mt-4">Agregue una imagen</label>
@@ -86,17 +86,17 @@
                         <th>Precio</th>
                     </tr>
                     <tr>
-                        <td>General</td>
+                        <td><input type="text" class="form-control" id="txtSectorGeneral" value="General"></td>
                         <td><input type="number" class="form-control" id="txtTicketsGeneral" value="0" min="0"></td>
                         <td><input type="number" class="form-control" id="txtPriceGeneral" value="0" min="0"></td>
                     </tr>
                     <tr>
-                        <td>Estudiantes</td>
+                        <td><input type="text" class="form-control" id="txtSectorEstudiantes" value="Estudiantes"></td>
                         <td><input type="number" class="form-control" id="txtTicketsStudents" value="0" min="0"></td>
                         <td><input type="number" class="form-control" id="txtPriceStudents" value="0" min="0"></td>
                     </tr>
                     <tr>
-                        <td>Adultos Mayores</td>
+                        <td><input type="text" class="form-control" id="txtSectorTicketsAdults" value="Adultos Mayores"></td>
                         <td><input type="number" class="form-control" id="txtTicketsAdults" value="0" min="0"></td>
                         <td><input type="number" class="form-control" id="txtPriceAdults" value="0" min="0"></td>
                     </tr>

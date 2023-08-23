@@ -21,7 +21,7 @@ namespace DataAccess.CRUD
 
         public override void Create(BaseDTO dto)
         {
-            var sunpe = (SunpeTransaction) dto;
+            var sunpe = dto;
 
             var sqlOperation = _mapper.GetCreateStatement(sunpe);
 

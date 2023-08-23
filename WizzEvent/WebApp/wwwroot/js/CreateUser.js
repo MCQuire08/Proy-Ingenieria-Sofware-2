@@ -187,7 +187,7 @@ function validacionOTPTelefono() {
 
     var ctrlActions = new ControlActions();
     const apiUrl = `OTP/GeneratePhone?phone=${encodeURIComponent(phone)}`;
-    ctrlActions.PostToAPI(apiUrl,"", function () {
+    ctrlActions.PostToAPI(apiUrl, "", function (valueTrue, otpValue) {
 
         var otpValueString = otpValue.toString();
         Swal.fire({

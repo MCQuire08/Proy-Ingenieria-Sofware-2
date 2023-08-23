@@ -12,7 +12,7 @@ namespace DataAccess.Mapper
     {
         public BaseDTO BuildObject(Dictionary<string, object> row)
         {
-            var sunpe = new SunpeTransaction
+            var sunpe = new TEF
             {
                 Id = (int)row["IdSunpe"]
             };
@@ -38,7 +38,7 @@ namespace DataAccess.Mapper
             var sqlOperation = new SQLOperation();
             sqlOperation.ProcedureName = "PAY_SUNPE_TRANSACTIONS_PR";
 
-            var sunpe = (SunpeTransaction)dto;
+            var sunpe = (TEF)dto;
 
             sqlOperation.AddDecimalParam("P_AMOUNT", sunpe.Amount);
             sqlOperation.AddVarcharParam("P_SENDER", sunpe.Sender);

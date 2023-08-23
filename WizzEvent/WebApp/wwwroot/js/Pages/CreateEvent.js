@@ -102,6 +102,9 @@
                 title: 'Evento creado correctamente',
                 text: 'El evento se ha creado con éxito.',
             });
+            setTimeout(function () {
+                window.location.href = "https://localhost:7072/";
+            }, 2000);
         } else {
             let errorMessages = [];
 
@@ -293,7 +296,7 @@
         var entries = [];
 
         $("#table-type-tickets tr:not(:first)").each(function () {
-            var type = $(this).find("td:eq(0)").text();
+            var type = $(this).find("input[type=text]").val();
             var amount = parseInt($(this).find("input[type=number]").eq(0).val());
             var price = parseFloat($(this).find("input[type=number]").eq(1).val());
 
@@ -349,6 +352,7 @@
             });
         });
     }
+
 
 
 

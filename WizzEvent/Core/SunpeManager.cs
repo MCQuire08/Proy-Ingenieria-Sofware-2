@@ -10,16 +10,16 @@ namespace Core
 {
     public class SunpeManager
     {
-        public void PaySunpeTransaction(SunpeTransaction sunpeTransaction)
+        public void PaySunpeTransaction(TEF sunpeTransaction)
         {
             var crud = new SunpeCrudFactory();
             crud.Create(sunpeTransaction);
         }
 
-        public SunpeTransaction RetrieveIdSunpe(string transactionId)
+        public TEF RetrieveIdSunpe(string transactionId)
         {
             var crud = new SunpeCrudFactory();
-            return crud.RetrieveIdSunpe<SunpeTransaction>(transactionId);
+            return crud.RetrieveIdSunpe<TEF>(transactionId);
         }
     }
 }

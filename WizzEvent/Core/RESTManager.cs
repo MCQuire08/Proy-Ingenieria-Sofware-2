@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Core
 {
@@ -68,24 +69,25 @@ namespace Core
         }
 
 
-        public async Task<bool> PostToApiSUNPE(SunpeTransaction sunpeTransaction)
+        public async Task PostToApiSUNPE(TEF sunpeTransaction)
         {
             var url = "https://sunpe.azurewebsites.net/api/SUNPE/SendTEF";
 
             var httpClient = new HttpClient();
 
+            // Serializar el objeto usuario a JSON
             string jsonUser = JsonConvert.SerializeObject(sunpeTransaction);
 
+            // Crear el contenido de la solicitud HTTP
             var content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
 
             var response = await httpClient.PostAsync(url, content);
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception(response.Content.ReadAsStringAsync().Result);
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception(error);
             }
-
-            return true;
         }
     }
 }

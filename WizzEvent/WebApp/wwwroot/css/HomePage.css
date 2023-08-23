@@ -143,3 +143,40 @@
     align-self: flex-start;
     max-width: 80%;
 }
+/*Add tickets to cart*/
+
+.tbl-buyTickets {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.type-Ticket {
+    display: flex;
+    align-items: center;
+}
+
+    .type-Ticket p {
+        margin: 0;
+    }
+
+    .type-Ticket td {
+        padding: 20px;
+        text-align: center;
+    }
+
+        .type-Ticket td:nth-child(2),
+        .type-Ticket td:nth-child(3) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    .type-Ticket span {
+        margin-right: 10px;
+    }
+
+.fa-solid {
+    cursor: pointer;
+    margin: 0 15px;
+}

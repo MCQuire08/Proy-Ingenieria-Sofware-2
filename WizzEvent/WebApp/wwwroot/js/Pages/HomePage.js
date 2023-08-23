@@ -9,19 +9,30 @@
         $('#btnAddCartItems').click(function () {
             view.AddItemsToCart();
         });
+
+        $('#sendBtn').on('click', () => {
+            this.handleChatMessage();
+        });
+
+        $('#userInput').on('keypress', (e) => {
+            if (e.which === 13) {
+                this.handleChatMessage();
+                e.preventDefault();
+            }
+        });
     }
 
     this.AddItemsToCart = async function () {
         const baseUrl = 'https://localhost:7152/api/CartItem/CreateCartItem';
         const ticketTableBody = $('#ticketTableBody');
-        let allQuantitiesZero = true; // Flag to track if all quantities are zero
+        let allQuantitiesZero = true;
 
         ticketTableBody.find('.type-Ticket').each(function () {
             const quantity = parseInt($(this).find('.quantity').text());
 
 
             if (quantity > 0) {
-                allQuantitiesZero = false; // If at least one quantity is greater than zero, set flag to false
+                allQuantitiesZero = false;
 
                 const ticketId = $(this).find('.ticket-type').attr('data-ticket-id');
                 var idUser = localStorage.getItem('idUsuario');
@@ -42,11 +53,7 @@
                             confirmButtonText: 'Ir a pagar'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Vamos a pagar.',
-                                    'success'
-                                );
+                                //window.location.href = 'https://localhost:7072/Cart';
                             } else {
                                 location.reload();
                                 $('#modalAddCart').modal('hide');
@@ -103,7 +110,6 @@
             contactDiv.append(nameElement, contactElement);
             contactsContainer.append(contactDiv);
         });
-
         sloganElement.before('<br>');
     }
 
@@ -366,22 +372,6 @@
         }
 
         userInput.val('');
-    }
-
-    this.InitView = function () {
-        console.log('HomePage init');
-        this.CreateCardsOfHomePage();
-
-        $('#sendBtn').on('click', () => {
-            this.handleChatMessage();
-        });
-
-        $('#userInput').on('keypress', (e) => {
-            if (e.which === 13) { 
-                this.handleChatMessage();
-                e.preventDefault(); 
-            }
-        });
     }
 }
 

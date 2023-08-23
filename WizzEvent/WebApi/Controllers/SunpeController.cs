@@ -11,7 +11,7 @@ namespace WebApi.Controllers
     {
         [HttpPost]
         [Route("PaySunpeTransaction")]
-        public async Task<IActionResult> PaySunpeTransaction(SunpeTransaction sunpeTransaction)
+        public async Task<IActionResult> PaySunpeTransaction(TEF sunpeTransaction)
         {
             try
             {

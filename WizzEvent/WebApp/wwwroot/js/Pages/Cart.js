@@ -41,6 +41,10 @@
             }
         });
 
+        $('#btnDownloadQR').click(function () {
+            view.generateQRCodeAndDownload('Hola');
+        });
+
         $('#btnSendEmail').click(function () {
             view.sendInvoice();
         });
@@ -84,6 +88,21 @@
             })
         });
 
+    }
+
+    this.generateQRCodeAndDownload = function (text) {
+        const qrcode = new QRCode(0, {
+            text: text,
+            width: 128,
+            height: 128,
+        });
+
+        const canvas = qrcode._oDrawing._el;
+        const qrImageUrl = canvas.toDataURL("image/png");
+        const link = document.createElement('a');
+        link.href = qrImageUrl;
+        link.download = 'codigo_qr.png';
+        link.click();
     }
 
     this.sendInvoice = function () {
@@ -267,17 +286,47 @@
         });
     }
 
-    this.PayItemsCart = function () {
+    this.generateCustomId = function () {
+        const segments = [8, 4, 4, 4, 12];
+        const characters = 'abcdefghijklmnopqrstuvwxyzZ0123456789';
+        let customId = '';
 
+        segments.forEach((segmentLength, index) => {
+            for (let i = 0; i < segmentLength; i++) {
+                customId += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            if (index < segments.length - 1) {
+                customId += '-';
+            }
+        });
+
+        return customId;
+    }
+
+    this.generateFormattedDate =  function () {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, '0');
+        const day = today.getDate().toString().padStart(2, '0');
+        const hours = today.getHours().toString().padStart(2, '0');
+        const minutes = today.getMinutes().toString().padStart(2, '0');
+        const seconds = today.getSeconds().toString().padStart(2, '0');
+        const milliseconds = today.getMilliseconds().toString().padStart(3, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+    }
+
+    this.PayItemsCart = function () {
+        var view = new CreateCartController();
         const data = {
             "id": 0,
             "uban": "CRC186325665356954",
             "amount": $('#ticketsPrice').text(),
             "description": "Pago de ",
-            "sender": $('#clientInfo').text() ,
-            "transactionId": "45205a83-c82a-4821-8017-12b12389d3ce",
+            "sender": $('#clientInfo').text(),
+            "transactionId": view.generateCustomId(),
             "status": "OK",
-            "transactionDate": "2023-08-21T05:29:25.395Z"
+            "transactionDate": view.generateFormattedDate()
         };
 
         var apiUrl = "https://localhost:7152/api/Sunpe/PaySunpeTransaction";

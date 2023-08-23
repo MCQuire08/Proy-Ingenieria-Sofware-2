@@ -62,6 +62,7 @@
 
 <div class="container-cards">
 </div>
+
 <div class="chatbot-container" id="chatbotContainer">
     <div class="chat-header">
         <span>Chatbot</span>
@@ -76,7 +77,15 @@
 <script>
     $(document).ready(function () {
         $('#btnBuyTicket').on('click', function () {
-            $('#modalAddCart').modal('show');
+            if (localStorage.getItem('idUsuario') === 0){
+                Swal.fire(
+                    'Oops!?',
+                    'Debe iniciar sesion!',
+                    'error'
+                )
+            }else{
+                $('#modalAddCart').modal('show');
+            }
         });
 
         $('#modalAddCart').on('show.bs.modal', function () {
